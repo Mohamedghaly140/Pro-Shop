@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import {
 	Row,
@@ -9,16 +11,27 @@ import {
 	ListGroup,
 } from 'react-bootstrap';
 import Rating from '../components/Rating';
-import products from '../products';
 import { Product } from '../models/Product';
 
 const ProductScreen = () => {
 	const { id } = useParams<{ id: string }>();
 
-	const product: Product = products.find(product => product._id === id)!;
+	const [product, setProduct] = useState<Product>();
+
+	useEffect(() => {
+		(async () => {
+			const { data } = await axios.get<Product>(`/api/products/${id}`);
+
+			setProduct(data);
+		})();
+	}, [id]);
 
 	if (!product) {
-		return <Spinner animation="border" />;
+		return (
+			<div className="vh-100 d-flex justify-content-center align-items-center">
+				<Spinner animation="border" />
+			</div>
+		);
 	}
 
 	return (
