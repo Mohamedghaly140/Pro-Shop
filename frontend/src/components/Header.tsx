@@ -1,5 +1,4 @@
 import { Container, Navbar, Nav } from 'react-bootstrap';
-import { FaShoppingCart, FaUser } from 'react-icons/fa';
 
 const Header: React.FC = () => {
 	return (
@@ -11,10 +10,10 @@ const Header: React.FC = () => {
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="ml-auto">
 							<Nav.Link href="/cart">
-								<FaShoppingCart size="1.2em" /> Cart
+								<i className="fas fa-shopping-cart"></i> Cart
 							</Nav.Link>
 							<Nav.Link href="/login">
-								<FaUser size="1.2em" /> Sign In
+								<i className="fas fa-user"></i> Sign In
 							</Nav.Link>
 						</Nav>
 					</Navbar.Collapse>
