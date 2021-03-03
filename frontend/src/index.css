@@ -1,3 +1,7 @@
 .rating span {
 	margin: 0 0.1rem;
 }
+
+.product__item {
+	height: 410px;
+}
