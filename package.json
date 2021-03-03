@@ -1,0 +1,22 @@
+{
+  "name": "proshop",
+  "version": "1.0.0",
+  "description": "ProShop eCommerce Web App build with MERN Stack Technology",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mohamedghaly140/Pro-Shop.git"
+  },
+  "author": "Mohamed Ghaly",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mohamedghaly140/Pro-Shop/issues"
+  },
+  "homepage": "https://github.com/Mohamedghaly140/Pro-Shop#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
