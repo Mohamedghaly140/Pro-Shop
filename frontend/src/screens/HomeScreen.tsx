@@ -1,19 +1,33 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { Product as ProductItem } from '../models/Product';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, productActions } from '../redux';
 import Product from '../components/Product';
+import Spinner from '../components/Loader';
+import Message from '../components/Message';
 
 const HomeScreen: React.FC = () => {
-	const [products, setProducts] = useState<ProductItem[]>([]);
+	const { loading, products, error } = useSelector(
+		(state: RootState) => state.productList
+	);
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		(async () => {
-			const { data } = await axios.get<ProductItem[]>('/api/products');
+		dispatch(productActions.getAllProducts());
+	}, [dispatch]);
 
-			setProducts(data);
-		})();
-	}, []);
+	if (loading) {
+		return (
+			<div className="vh-100 d-flex justify-content-center align-items-center">
+				<Spinner />
+			</div>
+		);
+	}
+
+	if (error) {
+		return <Message variant="danger">{error}</Message>;
+	}
 
 	return (
 		<>

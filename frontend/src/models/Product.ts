@@ -1,3 +1,9 @@
+interface Review {
+	name: string;
+	rating: number;
+	comment: string;
+}
+
 export interface Product {
 	_id: string;
 	name: string;
@@ -5,8 +11,12 @@ export interface Product {
 	description: string;
 	brand: string;
 	category: string;
+	user: string;
 	price: number;
 	countInStock: number;
 	rating: number;
 	numReviews: number;
+	reviews?: Review[];
+	createdAt: string;
+	updatedAt: string;
 }

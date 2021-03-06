@@ -5,3 +5,7 @@
 .product__item {
 	height: 410px;
 }
+
+button:disabled {
+	cursor: not-allowed;
+}

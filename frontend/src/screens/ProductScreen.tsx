@@ -1,37 +1,35 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import {
-	Row,
-	Col,
-	Image,
-	Card,
-	Button,
-	Spinner,
-	ListGroup,
-} from 'react-bootstrap';
+import { Row, Col, Image, Card, Button, ListGroup } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, productActions } from '../redux';
 import Rating from '../components/Rating';
-import { Product } from '../models/Product';
+import Spinner from '../components/Loader';
+import Message from '../components/Message';
 
 const ProductScreen = () => {
 	const { id } = useParams<{ id: string }>();
 
-	const [product, setProduct] = useState<Product>();
+	const { loading, product, error } = useSelector(
+		(state: RootState) => state.productDetail
+	);
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		(async () => {
-			const { data } = await axios.get<Product>(`/api/products/${id}`);
+		dispatch(productActions.getSingleProduct(id));
+	}, [id, dispatch]);
 
-			setProduct(data);
-		})();
-	}, [id]);
-
-	if (!product) {
+	if (loading || !product) {
 		return (
 			<div className="vh-100 d-flex justify-content-center align-items-center">
-				<Spinner animation="border" />
+				<Spinner />
 			</div>
 		);
+	}
+
+	if (error) {
+		return <Message variant="danger">{error}</Message>;
 	}
 
 	return (
