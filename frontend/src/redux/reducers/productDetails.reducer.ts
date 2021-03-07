@@ -1,34 +1,34 @@
-import { ActionTypes } from '../actions/actions';
-import { ProductDetailsAction } from '../action-types/action-types';
+import { ProductActionTypes } from '../actions/product.actions';
+import { ProductDetailsAction } from '../action-types/products.actionTypes';
 
 import { Product } from '../../models/Product';
 
-interface ProductState {
+export interface ProductDetailState {
 	loading: boolean;
 	product: Product | null;
 	error: string | null;
 }
 
-const initialState: ProductState = {
+const initialState: ProductDetailState = {
 	loading: false,
 	product: null,
 	error: null,
 };
 
-const productListReducer = (
-	state: ProductState = initialState,
+const productDetailsReducer = (
+	state: ProductDetailState = initialState,
 	action: ProductDetailsAction
-): ProductState => {
+): ProductDetailState => {
 	switch (action.type) {
-		case ActionTypes.PRODUCT_DETAILS_REQUEST:
+		case ProductActionTypes.PRODUCT_DETAILS_REQUEST:
 			return { ...state, loading: true };
-		case ActionTypes.PRODUCT_DETAILS_SUCCESS:
+		case ProductActionTypes.PRODUCT_DETAILS_SUCCESS:
 			return { ...state, loading: false, product: action.payload };
-		case ActionTypes.PRODUCT_DETAILS_FAIL:
+		case ProductActionTypes.PRODUCT_DETAILS_FAIL:
 			return { ...state, loading: false, error: action.payload };
 		default:
 			return state;
 	}
 };
 
-export default productListReducer;
+export default productDetailsReducer;

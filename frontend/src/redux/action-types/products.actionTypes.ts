@@ -1,31 +1,31 @@
-import { ActionTypes } from '../actions/actions';
+import { ProductActionTypes } from '../actions/product.actions';
 import { Product } from '../../models/Product';
 
 interface ProductListAction {
-	type: ActionTypes.PRODUCT_LIST_REQUEST;
+	type: ProductActionTypes.PRODUCT_LIST_REQUEST;
 }
 
 interface ProductListSuccessAction {
-	type: ActionTypes.PRODUCT_LIST_SUCCESS;
+	type: ProductActionTypes.PRODUCT_LIST_SUCCESS;
 	payload: Product[];
 }
 
 interface ProductListErrorAction {
-	type: ActionTypes.PRODUCT_LIST_FAIL;
+	type: ProductActionTypes.PRODUCT_LIST_FAIL;
 	payload: string;
 }
 
 interface ProductDetailAction {
-	type: ActionTypes.PRODUCT_DETAILS_REQUEST;
+	type: ProductActionTypes.PRODUCT_DETAILS_REQUEST;
 }
 
 interface ProductDetailSuccessAction {
-	type: ActionTypes.PRODUCT_DETAILS_SUCCESS;
+	type: ProductActionTypes.PRODUCT_DETAILS_SUCCESS;
 	payload: Product;
 }
 
 interface ProductDetailErrorAction {
-	type: ActionTypes.PRODUCT_DETAILS_FAIL;
+	type: ProductActionTypes.PRODUCT_DETAILS_FAIL;
 	payload: string;
 }
 

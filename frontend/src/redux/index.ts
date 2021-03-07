@@ -1,2 +1,3 @@
-export * as productActions from './action-creators/action.creator';
+export * as productActions from './action-creators/products.actionCreator';
+export * as cartActions from './action-creators/cart.actionsCreators.ts';
 export * from './reducers';
