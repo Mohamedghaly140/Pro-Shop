@@ -1,6 +1,14 @@
-import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Row, Col, Image, Card, Button, ListGroup } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Link, useParams, useHistory } from 'react-router-dom';
+import {
+	Row,
+	Col,
+	Image,
+	Card,
+	Button,
+	ListGroup,
+	Form,
+} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, productActions } from '../redux';
 import Rating from '../components/Rating';
@@ -8,7 +16,11 @@ import Spinner from '../components/Loader';
 import Message from '../components/Message';
 
 const ProductScreen = () => {
+	const [qty, setQty] = useState<number>(1);
+
 	const { id } = useParams<{ id: string }>();
+
+	const history = useHistory();
 
 	const { loading, product, error } = useSelector(
 		(state: RootState) => state.productDetail
@@ -19,6 +31,8 @@ const ProductScreen = () => {
 	useEffect(() => {
 		dispatch(productActions.getSingleProduct(id));
 	}, [id, dispatch]);
+
+	const addToCartHandler = () => history.push(`/cart/${id}?qty=${qty}`);
 
 	if (loading || !product) {
 		return (
@@ -75,10 +89,31 @@ const ProductScreen = () => {
 									</Col>
 								</Row>
 							</ListGroup.Item>
+							{product.countInStock > 0 && (
+								<ListGroup.Item>
+									<Row>
+										<Col className="d-flex align-items-center">Quanity</Col>
+										<Col>
+											<Form.Control
+												as="select"
+												value={qty}
+												onChange={e => setQty(+e.target.value)}
+											>
+												{[...Array(product.countInStock).keys()].map(qty => (
+													<option key={qty + 1} value={qty + 1}>
+														{qty + 1}
+													</option>
+												))}
+											</Form.Control>
+										</Col>
+									</Row>
+								</ListGroup.Item>
+							)}
 							<ListGroup.Item>
 								<Button
 									block
 									variant="dark"
+									onClick={addToCartHandler}
 									disabled={product.countInStock === 0}
 								>
 									Add to Cart
