@@ -7,4 +7,9 @@ interface CarAddItem {
 	payload: CartItem;
 }
 
-export type CartAction = CarAddItem;
+interface CarRemoveItem {
+	type: CartActionTypes.REMOVE_CART_ITEM;
+	payload: string;
+}
+
+export type CartAction = CarAddItem | CarRemoveItem;

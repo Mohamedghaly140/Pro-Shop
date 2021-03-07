@@ -32,11 +32,10 @@ const CartScreen: React.FC = () => {
 		if (id) {
 			dispatch(cartActions.addToCart(id, qty));
 		}
-		console.log(id, qty);
 	}, [dispatch, id, qty]);
 
 	const removeFromCardHandler = (productId: string) => {
-		console.log('remove', productId);
+		dispatch(cartActions.removeFromCart(productId));
 	};
 
 	const checkoutHandler = () => {
@@ -44,8 +43,6 @@ const CartScreen: React.FC = () => {
 	};
 
 	let shoppingList;
-
-	console.log(cartItems);
 
 	if (cartItems.length === 0) {
 		shoppingList = (

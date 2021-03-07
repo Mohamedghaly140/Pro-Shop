@@ -33,9 +33,13 @@ const cartReducer = (
 			} else {
 				return { ...state, cartItems: [...state.cartItems, carItem] };
 			}
-
-		// case ProductActionTypes.PRODUCT_LIST_SUCCESS:
-		// 	return { ...state, loading: false, products: action.payload };
+		case CartActionTypes.REMOVE_CART_ITEM:
+			return {
+				...state,
+				cartItems: state.cartItems.filter(
+					item => item.product !== action.payload
+				),
+			};
 		default:
 			return state;
 	}
