@@ -30,7 +30,7 @@ const initialState: State = {
 		error: null,
 	},
 	cart: {
-		cartItems: [...cartItemsFromStorage],
+		cartItems: cartItemsFromStorage,
 	},
 };
 
