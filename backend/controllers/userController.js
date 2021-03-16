@@ -98,11 +98,12 @@ export const signup = asyncHandler(async (req, res, next) => {
 
 	res.status(201).json({
 		message: 'Signed up successfuly',
+		token: token,
+		name: createdUser.name,
 		userId: createdUser.id,
 		email: createdUser.email,
-		userName: createdUser.userName,
 		isAdmin: createdUser.isAdmin,
-		token: token,
+		userName: createdUser.userName,
 	});
 });
 
@@ -159,11 +160,12 @@ export const login = asyncHandler(async (req, res) => {
 
 	res.status(200).json({
 		message: 'Loggedin successfuly',
+		token: token,
+		name: exsitingUser.name,
 		userId: exsitingUser.id,
 		email: exsitingUser.email,
 		isAdmin: exsitingUser.isAdmin,
 		userName: exsitingUser.userName,
-		token: token,
 	});
 });
 

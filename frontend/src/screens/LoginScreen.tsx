@@ -71,6 +71,7 @@ const LoginScreen: React.FC = () => {
 								value={email}
 								name="email"
 								onChange={changeHandler}
+								inputMode="email"
 							></Form.Control>
 						</Form.Group>
 
