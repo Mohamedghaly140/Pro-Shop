@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, userActions } from '../redux';
 
 const Header: React.FC = () => {
-	const { userInfo } = useSelector((state: RootState) => state.userLogin);
+	const { userInfo } = useSelector((state: RootState) => state.userAuth);
 
 	const dispatch = useDispatch();
 

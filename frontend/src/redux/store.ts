@@ -13,7 +13,7 @@ interface State {
 	productList: ProductListState;
 	productDetail: ProductDetailState;
 	cart: CartState;
-	userLogin: UserState;
+	userAuth: UserState;
 }
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
@@ -38,7 +38,7 @@ const initialState: State = {
 	cart: {
 		cartItems: cartItemsFromStorage,
 	},
-	userLogin: {
+	userAuth: {
 		userInfo: userInfoFromStorage,
 		loading: false,
 		error: null,

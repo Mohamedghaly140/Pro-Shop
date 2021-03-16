@@ -2,7 +2,7 @@ import { UserActionTypes } from '../actions/user.actions';
 import { User } from '../../models/User';
 
 interface UserLoginAction {
-	type: UserActionTypes.USER_LOGIN_REQUEST;
+	type: UserActionTypes.USER_AUTH_REQUEST;
 }
 
 interface UserLoginSuccessAction {
@@ -10,8 +10,13 @@ interface UserLoginSuccessAction {
 	payload: User;
 }
 
+interface UserRegisterSuccessAction {
+	type: UserActionTypes.USER_REGISTER_SUCCESS;
+	payload: User;
+}
+
 interface UserLoginErrorAction {
-	type: UserActionTypes.USER_LOGIN_FAIL;
+	type: UserActionTypes.USER_AUTH_FAIL;
 	payload: string;
 }
 
@@ -20,6 +25,7 @@ interface UserLogoutAction {
 }
 
 export type UserAction =
+	| UserRegisterSuccessAction
 	| UserLoginAction
 	| UserLoginSuccessAction
 	| UserLoginErrorAction

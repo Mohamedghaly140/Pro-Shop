@@ -8,11 +8,15 @@ import FormContainer from '../components/FormContainer';
 import Spinner from '../components/Loader';
 import Message from '../components/Message';
 
-const LoginScreen: React.FC = () => {
+const RegisterScreen: React.FC = () => {
 	const [user, setUser] = useState({
+		name: '',
 		email: '',
+		userName: '',
 		password: '',
 	});
+	const [confirmPassword, setConfirmPassword] = useState<string>('');
+	const [message, setMessage] = useState<string | null>(null);
 
 	const { search } = useLocation<History>();
 
@@ -26,7 +30,7 @@ const LoginScreen: React.FC = () => {
 		(state: RootState) => state.userAuth
 	);
 
-	const { email, password } = user;
+	const { email, userName, name, password } = user;
 
 	const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setUser({ ...user, [event.target.name]: event.target.value });
@@ -34,7 +38,12 @@ const LoginScreen: React.FC = () => {
 
 	const loginHandler = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		dispatch(userActions.login(user));
+		if (password !== confirmPassword) {
+			return setMessage(
+				'Passwords do not Match, Please check your password again!'
+			);
+		}
+		dispatch(userActions.register(user));
 	};
 
 	useEffect(() => {
@@ -45,29 +54,41 @@ const LoginScreen: React.FC = () => {
 
 	return (
 		<FormContainer>
-			<h1>Sign In</h1>
+			<h1>Sign Up New Account</h1>
 			{error && <Message variant="danger">{error}</Message>}
+			{message && <Message variant="danger">{message}</Message>}
 			<Form onSubmit={loginHandler}>
 				{loading ? (
 					<Spinner />
 				) : (
 					<>
-						{/* <Form.Group controlId="userName">
+						<Form.Group controlId="name">
+							<Form.Label>Name</Form.Label>
+							<Form.Control
+								type="text"
+								placeholder="Enter Your Name"
+								value={name}
+								name="name"
+								onChange={changeHandler}
+							></Form.Control>
+						</Form.Group>
+
+						<Form.Group controlId="userName">
 							<Form.Label>User Name</Form.Label>
 							<Form.Control
 								type="text"
-								placeholder="Please Enter User Name"
+								placeholder="Enter User Name"
 								value={userName}
 								name="userName"
 								onChange={changeHandler}
 							></Form.Control>
-						</Form.Group> */}
+						</Form.Group>
 
 						<Form.Group controlId="email">
 							<Form.Label>Email Address</Form.Label>
 							<Form.Control
 								type="email"
-								placeholder="Please Enter Your Email"
+								placeholder="Enter Your Email"
 								value={email}
 								name="email"
 								onChange={changeHandler}
@@ -79,10 +100,21 @@ const LoginScreen: React.FC = () => {
 							<Form.Label>Password</Form.Label>
 							<Form.Control
 								type="password"
-								placeholder="Please Enter Password"
+								placeholder="Enter Password"
 								value={password}
 								name="password"
 								onChange={changeHandler}
+							></Form.Control>
+						</Form.Group>
+
+						<Form.Group controlId="confirmPassword">
+							<Form.Label>Confirm Password</Form.Label>
+							<Form.Control
+								type="password"
+								placeholder="confirm Password"
+								value={confirmPassword}
+								name="confirmPassword"
+								onChange={e => setConfirmPassword(e.target.value)}
 							></Form.Control>
 						</Form.Group>
 					</>
@@ -91,18 +123,22 @@ const LoginScreen: React.FC = () => {
 				<Button
 					type="submit"
 					variant="primary"
-					disabled={email === '' || password === ''}
+					disabled={
+						name === '' ||
+						userName === '' ||
+						email === '' ||
+						password === '' ||
+						confirmPassword === ''
+					}
 				>
-					Sign In
+					Register
 				</Button>
 
 				<Row className="py-3">
 					<Col>
-						New Customer?{' '}
-						<Link
-							to={redirect ? `/register?redirect=${redirect}` : '/register'}
-						>
-							Register
+						Already Have An Account?{' '}
+						<Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
+							Login
 						</Link>
 					</Col>
 				</Row>
@@ -111,4 +147,4 @@ const LoginScreen: React.FC = () => {
 	);
 };
 
-export default LoginScreen;
+export default RegisterScreen;

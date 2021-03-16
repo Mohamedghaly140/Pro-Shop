@@ -20,11 +20,13 @@ const userReducer = (
 	action: UserAction
 ): UserState => {
 	switch (action.type) {
-		case UserActionTypes.USER_LOGIN_REQUEST:
+		case UserActionTypes.USER_AUTH_REQUEST:
 			return { ...state, loading: true };
 		case UserActionTypes.USER_LOGIN_SUCCESS:
 			return { ...state, loading: false, userInfo: action.payload };
-		case UserActionTypes.USER_LOGIN_FAIL:
+		case UserActionTypes.USER_REGISTER_SUCCESS:
+			return { ...state, loading: false, userInfo: action.payload };
+		case UserActionTypes.USER_AUTH_FAIL:
 			return { ...state, loading: false, error: action.payload };
 		case UserActionTypes.USER_LOGOT:
 			return { loading: false, userInfo: null, error: null };
