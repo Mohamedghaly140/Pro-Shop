@@ -7,16 +7,22 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { ProductDetailState } from './reducers/productDetails.reducer';
 import { ProductListState } from './reducers/productList.reducer';
 import { CartState } from './reducers/cart.reducer';
+import { UserState } from './reducers/user.reducer';
 
 interface State {
 	productList: ProductListState;
 	productDetail: ProductDetailState;
 	cart: CartState;
+	userLogin: UserState;
 }
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
 	? JSON.parse(localStorage.getItem('cartItems')!)
 	: [];
+
+const userInfoFromStorage = localStorage.getItem('userInfo')
+	? JSON.parse(localStorage.getItem('userInfo')!)
+	: null;
 
 const initialState: State = {
 	productList: {
@@ -31,6 +37,11 @@ const initialState: State = {
 	},
 	cart: {
 		cartItems: cartItemsFromStorage,
+	},
+	userLogin: {
+		userInfo: userInfoFromStorage,
+		loading: false,
+		error: null,
 	},
 };
 
