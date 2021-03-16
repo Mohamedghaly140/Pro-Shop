@@ -16,16 +16,11 @@ export const signup = asyncHandler(async (req, res, next) => {
 	const { userName, email, name, password } = req.body;
 
 	let exsitingUser;
-	try {
-		exsitingUser = await User.findOne({ email });
+	exsitingUser = await User.findOne({ email });
 
-		if (exsitingUser) {
-			res.status(422);
-			throw new Error('User already exist, please login instead');
-		}
-	} catch (err) {
-		res.status(500);
-		throw new Error('Signing up failed, please try again later');
+	if (exsitingUser) {
+		res.status(422);
+		throw new Error('User already exist, please login instead');
 	}
 
 	let hashedPassword;
@@ -115,23 +110,15 @@ export const signup = asyncHandler(async (req, res, next) => {
 // @route   POST /api/users/login
 // @access  Public
 export const login = asyncHandler(async (req, res) => {
-	const { userName, email, password } = req.body;
+	const { email, password } = req.body;
 
 	let exsitingUser;
-	if (email) {
-		try {
-			exsitingUser = await User.findOne({ email });
-		} catch (err) {
-			res.status(500);
-			throw new Error('Logging in failed, please try again later');
-		}
-	} else {
-		try {
-			exsitingUser = await User.findOne({ userName });
-		} catch (err) {
-			res.status(500);
-			throw new Error('Logging in failed, please try again later');
-		}
+
+	try {
+		exsitingUser = await User.findOne({ email });
+	} catch (err) {
+		res.status(500);
+		throw new Error('Logging in failed, please try again later');
 	}
 
 	if (!exsitingUser) {

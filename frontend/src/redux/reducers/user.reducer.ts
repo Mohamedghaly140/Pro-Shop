@@ -1,7 +1,6 @@
 import { UserActionTypes } from '../actions/user.actions';
 import { UserAction } from '../action-types/user.actionTypes';
 
-import { Product } from '../../models/Product';
 import { User } from '../../models/User';
 
 export interface UserState {

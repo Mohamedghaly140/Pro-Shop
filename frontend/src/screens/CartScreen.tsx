@@ -13,7 +13,7 @@ import {
 } from 'react-bootstrap';
 import { RootState, cartActions } from '../redux/index';
 import Message from '../components/Message';
-import Loader from '../components/Loader';
+// import Spinner from '../components/Loader';
 
 const CartScreen: React.FC = () => {
 	const { id } = useParams<{ id?: string }>();

@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 import { UserActionTypes } from '../actions/user.actions';
 import { UserAction } from '../action-types/user.actionTypes';
 
-export const login = (userName: string, email: string, password: string) => {
+export const login = (userData: { email: string; password: string }) => {
 	return async (dispatch: Dispatch<UserAction>) => {
 		dispatch({ type: UserActionTypes.USER_LOGIN_REQUEST });
 
@@ -14,11 +14,7 @@ export const login = (userName: string, email: string, password: string) => {
 		};
 
 		try {
-			const { data } = await axios.post(
-				'/api/users/login',
-				{ userName, email, password },
-				config
-			);
+			const { data } = await axios.post('/api/users/login', userData, config);
 
 			dispatch({
 				type: UserActionTypes.USER_LOGIN_SUCCESS,
