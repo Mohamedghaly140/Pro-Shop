@@ -124,7 +124,7 @@ export const login = asyncHandler(async (req, res) => {
 
 	if (!exsitingUser) {
 		res.status(422);
-		throw new Error('Invalid credentails, could not login', 422);
+		throw new Error('Invalid email or password, could not login', 422);
 	}
 
 	let isValidPassword;
@@ -139,7 +139,9 @@ export const login = asyncHandler(async (req, res) => {
 
 	if (!isValidPassword) {
 		res.status(422);
-		throw new Error('Invalid credentails, could not login');
+		throw new Error(
+			'Invalid email or password, please try again with valid credentails'
+		);
 	}
 
 	let token;
@@ -185,6 +187,63 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 			email: user.email,
 			isAdmin: user.isAdmin,
 			userName: user.userName,
+		});
+	} else {
+		res.status(404);
+		throw new Error('User Not Found');
+	}
+});
+
+// @desc    Update user profile
+// @route   PUT /api/users/profile
+// @access  Private
+export const updateUserProfile = asyncHandler(async (req, res) => {
+	const userId = req.params.id;
+
+	const user = await User.findById(req.userData.userId);
+
+	if (user) {
+		user.name = req.body.name || user.name;
+		user.userName = req.body.userName || user.userName;
+		user.email = req.body.email || user.email;
+
+		if (req.body.password) {
+			let hashedPassword;
+			try {
+				hashedPassword = await bcrypt.hash(req.body.password, 12);
+			} catch (err) {
+				res.status(500);
+				throw new Error('Could not create user, please try again later');
+			}
+			user.password = hashedPassword;
+		}
+
+		const updatedUser = await user.save();
+
+		let token;
+		try {
+			token = jwt.sign(
+				{
+					userId: updatedUser.id,
+					email: updatedUser.email,
+					userName: updatedUser.userName,
+				},
+				process.env.JWT_SECRET_KEY,
+				{ expiresIn: '30d' }
+			);
+		} catch (err) {
+			res.status(500);
+			throw new Error('Update Profile, please try again later');
+		}
+
+		res.status(200).json({
+			message: 'Update User Profile successfuly',
+			token: token,
+			name: updatedUser.name,
+			userId: updatedUser.id,
+			email: updatedUser.email,
+			isAdmin: updatedUser.isAdmin,
+			userName: updatedUser.userName,
 		});
 	} else {
 		res.status(404);
