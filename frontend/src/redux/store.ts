@@ -7,13 +7,17 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { ProductDetailState } from './reducers/productDetails.reducer';
 import { ProductListState } from './reducers/productList.reducer';
 import { CartState } from './reducers/cart.reducer';
-import { UserState } from './reducers/user.reducer';
+import { UserAuthState } from './reducers/user.reducer';
+import { UserDetailsProfileState } from './reducers/userDetails.reducer';
+import { UserUpdateProfileState } from './reducers/userUpdateProfile.reducer';
 
 interface State {
 	productList: ProductListState;
 	productDetail: ProductDetailState;
+	userAuth: UserAuthState;
 	cart: CartState;
-	userAuth: UserState;
+	userDetails: UserDetailsProfileState;
+	userUpdate: UserUpdateProfileState;
 }
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
@@ -41,6 +45,17 @@ const initialState: State = {
 	userAuth: {
 		userInfo: userInfoFromStorage,
 		loading: false,
+		error: null,
+	},
+	userDetails: {
+		user: null,
+		loading: false,
+		error: null,
+	},
+	userUpdate: {
+		user: null,
+		loading: false,
+		success: false,
 		error: null,
 	},
 };

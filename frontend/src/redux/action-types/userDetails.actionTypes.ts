@@ -1,17 +1,17 @@
-import { UserActionTypes } from '../actions/userDetails.action';
+import { UserDetailsActionTypes } from '../actions/userDetails.action';
 import { User } from '../../models/User';
 
 interface UserDetailsAction {
-	type: UserActionTypes.USER_DETAILS_REQUEST;
+	type: UserDetailsActionTypes.USER_DETAILS_REQUEST;
 }
 
 interface UserDetailsSuccessAction {
-	type: UserActionTypes.USER_DETAILS_SUCCESS;
+	type: UserDetailsActionTypes.USER_DETAILS_SUCCESS;
 	payload: User;
 }
 
 interface UserDetailsErrorAction {
-	type: UserActionTypes.USER_DETAILS_FAIL;
+	type: UserDetailsActionTypes.USER_DETAILS_FAIL;
 	payload: string;
 }
 

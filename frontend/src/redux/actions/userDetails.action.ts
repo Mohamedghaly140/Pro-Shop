@@ -1,4 +1,4 @@
-export enum UserActionTypes {
+export enum UserDetailsActionTypes {
 	USER_DETAILS_REQUEST = 'USER_DETAILS_REQUEST',
 	USER_DETAILS_SUCCESS = 'USER_DETAILS_SUCCESS',
 	USER_DETAILS_FAIL = 'USER_DETAILS_FAIL',

@@ -1,34 +1,34 @@
-import { UserActionTypes } from '../actions/userDetails.action';
+import { UserDetailsActionTypes } from '../actions/userDetails.action';
 import { UserAction } from '../action-types/userDetails.actionTypes';
 
 import { User } from '../../models/User';
 
-export interface UserState {
+export interface UserDetailsProfileState {
 	loading: boolean;
 	user: User | null;
 	error: string | null;
 }
 
-const initialState: UserState = {
+const initialState: UserDetailsProfileState = {
 	loading: false,
 	user: null,
 	error: null,
 };
 
-const userReducer = (
-	state: UserState = initialState,
+const userDetailsReducer = (
+	state: UserDetailsProfileState = initialState,
 	action: UserAction
-): UserState => {
+): UserDetailsProfileState => {
 	switch (action.type) {
-		case UserActionTypes.USER_DETAILS_REQUEST:
+		case UserDetailsActionTypes.USER_DETAILS_REQUEST:
 			return { ...state, loading: true };
-		case UserActionTypes.USER_DETAILS_SUCCESS:
+		case UserDetailsActionTypes.USER_DETAILS_SUCCESS:
 			return { ...state, loading: false, user: action.payload };
-		case UserActionTypes.USER_DETAILS_FAIL:
+		case UserDetailsActionTypes.USER_DETAILS_FAIL:
 			return { ...state, loading: false, error: action.payload };
 		default:
 			return state;
 	}
 };
 
-export default userReducer;
+export default userDetailsReducer;

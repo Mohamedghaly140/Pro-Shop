@@ -237,7 +237,7 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 		}
 
 		res.status(200).json({
-			message: 'Update User Profile successfuly',
+			message: 'Updated Profile successfuly',
 			token: token,
 			name: updatedUser.name,
 			userId: updatedUser.id,

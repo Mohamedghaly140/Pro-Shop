@@ -47,46 +47,30 @@ const LoginScreen: React.FC = () => {
 		<FormContainer>
 			<h1>Sign In</h1>
 			{error && <Message variant="danger">{error}</Message>}
+			{loading && <Spinner />}
 			<Form onSubmit={loginHandler}>
-				{loading ? (
-					<Spinner />
-				) : (
-					<>
-						{/* <Form.Group controlId="userName">
-							<Form.Label>User Name</Form.Label>
-							<Form.Control
-								type="text"
-								placeholder="Please Enter User Name"
-								value={userName}
-								name="userName"
-								onChange={changeHandler}
-							></Form.Control>
-						</Form.Group> */}
+				<Form.Group controlId="email">
+					<Form.Label>Email Address</Form.Label>
+					<Form.Control
+						type="email"
+						placeholder="Please Enter Your Email"
+						value={email}
+						name="email"
+						onChange={changeHandler}
+						inputMode="email"
+					></Form.Control>
+				</Form.Group>
 
-						<Form.Group controlId="email">
-							<Form.Label>Email Address</Form.Label>
-							<Form.Control
-								type="email"
-								placeholder="Please Enter Your Email"
-								value={email}
-								name="email"
-								onChange={changeHandler}
-								inputMode="email"
-							></Form.Control>
-						</Form.Group>
-
-						<Form.Group controlId="password">
-							<Form.Label>Password</Form.Label>
-							<Form.Control
-								type="password"
-								placeholder="Please Enter Password"
-								value={password}
-								name="password"
-								onChange={changeHandler}
-							></Form.Control>
-						</Form.Group>
-					</>
-				)}
+				<Form.Group controlId="password">
+					<Form.Label>Password</Form.Label>
+					<Form.Control
+						type="password"
+						placeholder="Please Enter Password"
+						value={password}
+						name="password"
+						onChange={changeHandler}
+					></Form.Control>
+				</Form.Group>
 
 				<Button
 					type="submit"

@@ -3,22 +3,22 @@ import { UserAction } from '../action-types/user.actionTypes';
 
 import { User } from '../../models/User';
 
-export interface UserState {
+export interface UserAuthState {
 	loading: boolean;
 	userInfo: User | null;
 	error: string | null;
 }
 
-const initialState: UserState = {
+const initialState: UserAuthState = {
 	loading: false,
 	userInfo: null,
 	error: null,
 };
 
 const userReducer = (
-	state: UserState = initialState,
+	state: UserAuthState = initialState,
 	action: UserAction
-): UserState => {
+): UserAuthState => {
 	switch (action.type) {
 		case UserActionTypes.USER_AUTH_REQUEST:
 			return { ...state, loading: true };

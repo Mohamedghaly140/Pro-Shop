@@ -111,7 +111,7 @@ const RegisterScreen: React.FC = () => {
 							<Form.Label>Confirm Password</Form.Label>
 							<Form.Control
 								type="password"
-								placeholder="confirm Password"
+								placeholder="Confirm Password"
 								value={confirmPassword}
 								name="confirmPassword"
 								onChange={e => setConfirmPassword(e.target.value)}
