@@ -36,7 +36,7 @@ const RegisterScreen: React.FC = () => {
 		setUser({ ...user, [event.target.name]: event.target.value });
 	};
 
-	const loginHandler = (event: React.FormEvent<HTMLFormElement>) => {
+	const registerHandler = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		if (password !== confirmPassword) {
 			return setMessage(
@@ -57,7 +57,7 @@ const RegisterScreen: React.FC = () => {
 			<h1>Sign Up New Account</h1>
 			{error && <Message variant="danger">{error}</Message>}
 			{message && <Message variant="danger">{message}</Message>}
-			<Form onSubmit={loginHandler}>
+			<Form onSubmit={registerHandler}>
 				{loading ? (
 					<Spinner />
 				) : (
@@ -69,6 +69,7 @@ const RegisterScreen: React.FC = () => {
 								placeholder="Enter Your Name"
 								value={name}
 								name="name"
+								required
 								onChange={changeHandler}
 							></Form.Control>
 						</Form.Group>
@@ -80,6 +81,7 @@ const RegisterScreen: React.FC = () => {
 								placeholder="Enter User Name"
 								value={userName}
 								name="userName"
+								required
 								onChange={changeHandler}
 							></Form.Control>
 						</Form.Group>
@@ -91,6 +93,7 @@ const RegisterScreen: React.FC = () => {
 								placeholder="Enter Your Email"
 								value={email}
 								name="email"
+								required
 								onChange={changeHandler}
 								inputMode="email"
 							></Form.Control>
@@ -103,6 +106,7 @@ const RegisterScreen: React.FC = () => {
 								placeholder="Enter Password"
 								value={password}
 								name="password"
+								required
 								onChange={changeHandler}
 							></Form.Control>
 						</Form.Group>
@@ -113,6 +117,7 @@ const RegisterScreen: React.FC = () => {
 								type="password"
 								placeholder="Confirm Password"
 								value={confirmPassword}
+								required
 								name="confirmPassword"
 								onChange={e => setConfirmPassword(e.target.value)}
 							></Form.Control>

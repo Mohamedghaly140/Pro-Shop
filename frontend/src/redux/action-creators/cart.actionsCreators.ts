@@ -6,6 +6,7 @@ import { RootState } from '../reducers';
 
 import { CartItem } from '../../models/CartItem';
 import { Product } from '../../models/Product';
+import { ShippingAddress } from '../../models/ShippingAddress';
 
 export const addToCart = (id: string, qty: number) => {
 	return async (dispatch: Dispatch<CartAction>, getState: () => RootState) => {
@@ -43,5 +44,16 @@ export const removeFromCart = (id: string) => {
 			'cartItems',
 			JSON.stringify(getState().cart.cartItems)
 		);
+	};
+};
+
+export const saveShippingAddres = (shippingAddress: ShippingAddress) => {
+	return async (dispatch: Dispatch<CartAction>) => {
+		dispatch({
+			type: CartActionTypes.CART_SAVE_SHIPPING_ADDRESS,
+			payload: shippingAddress,
+		});
+
+		localStorage.setItem('shippingAddress', JSON.stringify(shippingAddress));
 	};
 };

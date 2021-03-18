@@ -56,6 +56,7 @@ const LoginScreen: React.FC = () => {
 						placeholder="Please Enter Your Email"
 						value={email}
 						name="email"
+						required
 						onChange={changeHandler}
 						inputMode="email"
 					></Form.Control>
@@ -68,6 +69,7 @@ const LoginScreen: React.FC = () => {
 						placeholder="Please Enter Password"
 						value={password}
 						name="password"
+						required
 						onChange={changeHandler}
 					></Form.Control>
 				</Form.Group>

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
