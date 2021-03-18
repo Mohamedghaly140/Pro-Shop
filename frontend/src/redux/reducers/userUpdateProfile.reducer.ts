@@ -28,6 +28,8 @@ const userUpdateProfileReducer = (
 			return { ...state, loading: false, success: true, user: action.payload };
 		case UserProfileActionTypes.USER_UPDATE_PROFILE_FAIL:
 			return { ...state, loading: false, error: action.payload };
+		case UserProfileActionTypes.USER_UPDATE_PROFILE_RESET:
+			return { loading: false, error: null, user: null, success: false };
 		default:
 			return state;
 	}

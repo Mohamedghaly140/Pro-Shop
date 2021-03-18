@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
+import { UserActionTypes } from '../actions/user.actions';
 import { UserProfileActionTypes } from '../actions/userUpdate.action';
 import { UserProfileAction } from '../action-types/userUpdate.actionTypes';
+import { UserAction } from '../action-types/user.actionTypes';
 import { RootState } from '../reducers';
 
 export const updateUserProfile = (userData: {
@@ -11,7 +13,7 @@ export const updateUserProfile = (userData: {
 	name: string;
 }) => {
 	return async (
-		dispatch: Dispatch<UserProfileAction>,
+		dispatch: Dispatch<UserProfileAction | UserAction>,
 		getState: () => RootState
 	) => {
 		dispatch({ type: UserProfileActionTypes.USER_UPDATE_PROFILE_REQUEST });
@@ -34,6 +36,13 @@ export const updateUserProfile = (userData: {
 				type: UserProfileActionTypes.USER_UPDATE_PROFILE_SUCCESS,
 				payload: data,
 			});
+
+			dispatch({
+				type: UserActionTypes.USER_LOGIN_SUCCESS,
+				payload: data,
+			});
+
+			localStorage.setItem('userInfo', JSON.stringify(data));
 		} catch (error) {
 			dispatch({
 				type: UserProfileActionTypes.USER_UPDATE_PROFILE_FAIL,
@@ -43,5 +52,11 @@ export const updateUserProfile = (userData: {
 						: error.message,
 			});
 		}
+	};
+};
+
+export const resetUserProfile = () => {
+	return (dispatch: Dispatch<UserProfileAction>) => {
+		dispatch({ type: UserProfileActionTypes.USER_UPDATE_PROFILE_RESET });
 	};
 };

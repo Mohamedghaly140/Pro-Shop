@@ -17,7 +17,6 @@ interface UserUpdateProfileErrorAction {
 
 interface UserUpdateProfileResetAction {
 	type: UserProfileActionTypes.USER_UPDATE_PROFILE_RESET;
-	payload: string;
 }
 
 export type UserProfileAction =

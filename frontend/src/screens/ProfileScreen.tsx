@@ -53,17 +53,18 @@ const ProfileScreen: React.FC = () => {
 			return history.push('/login');
 		}
 
-		if (user) {
+		if (!user || !user.name || success) {
+			dispatch(userUpdateActions.resetUserProfile());
+			dispatch(userDetailsActions.getUserProfile('profile'));
+		} else {
 			setUpdateUser({
 				password: '',
 				name: user.name,
 				email: user.email,
 				userName: user.userName,
 			});
-		} else {
-			dispatch(userDetailsActions.getUserProfile('profile'));
 		}
-	}, [history, userInfo, user, dispatch]);
+	}, [history, userInfo, user, success, dispatch]);
 
 	if (loading || !user) {
 		return (
