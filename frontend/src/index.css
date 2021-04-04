@@ -29,3 +29,8 @@ input[type='number']::-o-inner-spin-button {
 input[type='number']::-ms-inner-spin-button {
 	-ms-appearance: none;
 }
+
+a:disabled {
+	pointer-events: auto !important;
+	cursor: not-allowed !important;
+}

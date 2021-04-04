@@ -26,12 +26,12 @@ const ShippingScreen = () => {
 	const submitShippingHandler = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		dispatch(cartActions.saveShippingAddres(shipDetails));
-		history.push('payment');
+		history.push('/payment');
 	};
 
 	return (
 		<FormContainer>
-			<CheckoutSteps step1 />
+			<CheckoutSteps step1 step2 />
 			<h1>Shipping</h1>
 			<Form onSubmit={submitShippingHandler}>
 				<Form.Group controlId="address">

@@ -18,4 +18,13 @@ interface SaveShippingAddress {
 	payload: ShippingAddress;
 }
 
-export type CartAction = CarAddItem | CarRemoveItem | SaveShippingAddress;
+interface SavePaymentMethod {
+	type: CartActionTypes.CART_SAVE_PAYMENT_METHOD;
+	payload: string;
+}
+
+export type CartAction =
+	| CarAddItem
+	| CarRemoveItem
+	| SaveShippingAddress
+	| SavePaymentMethod;

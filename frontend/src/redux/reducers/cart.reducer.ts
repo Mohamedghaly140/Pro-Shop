@@ -6,11 +6,13 @@ import { ShippingAddress } from '../../models/ShippingAddress';
 
 export interface CartState {
 	cartItems: CartItem[];
+	paymentMethod: string;
 	shippingAddress: ShippingAddress;
 }
 
 const initialState: CartState = {
 	cartItems: [],
+	paymentMethod: 'PayPal',
 	shippingAddress: {
 		postalCode: '',
 		address: '',
@@ -52,6 +54,11 @@ const cartReducer = (
 			return {
 				...state,
 				shippingAddress: action.payload,
+			};
+		case CartActionTypes.CART_SAVE_PAYMENT_METHOD:
+			return {
+				...state,
+				paymentMethod: action.payload,
 			};
 		default:
 			return state;
