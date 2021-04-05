@@ -63,7 +63,7 @@ const PaymentScreen = () => {
 						<br />
 						<Form.Check
 							type="radio"
-							label="CashOnDelivery"
+							label="Cash On Delivery"
 							id="CashOnDelivery"
 							name="paymentMethod"
 							value="CashOnDelivery"
