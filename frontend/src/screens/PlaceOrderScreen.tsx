@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
+import {
+	Button,
+	Row,
+	Col,
+	ListGroup,
+	Image,
+	Card,
+	Spinner,
+} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, cartActions } from '../redux';
-import FormContainer from '../components/FormContainer';
+import { RootState, orderActions } from '../redux';
 import CheckoutSteps from '../components/CheckoutSteps';
 // import Spinner from '../components/Loader';
 import Message from '../components/Message';
@@ -14,6 +21,12 @@ const PlaceOrderScreen = () => {
 		paymentMethod,
 		cartItems,
 	} = useSelector((state: RootState) => state.cart);
+
+	const { loading, success, order, error } = useSelector(
+		(state: RootState) => state.order
+	);
+
+	const history = useHistory();
 
 	const addDeciamls = (num: number) => {
 		return +(Math.round(num * 100) / 100).toFixed(2);
@@ -27,7 +40,27 @@ const PlaceOrderScreen = () => {
 	const taxPrice = addDeciamls(Number((0.15 * itemsPrice).toFixed(2)));
 	const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
-	const placeOrderHandler = () => {};
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (success && order) {
+			history.push(`/order/${order?._id}`);
+		}
+	}, [success, history, order]);
+
+	const placeOrderHandler = () => {
+		dispatch(
+			orderActions.createOrder({
+				shippingAddress: { address, country, city, postalCode },
+				orderItems: cartItems,
+				paymentMethod,
+				itemsPrice,
+				shippingPrice,
+				taxPrice,
+				totalPrice,
+			})
+		);
+	};
 
 	return (
 		<>
@@ -119,14 +152,26 @@ const PlaceOrderScreen = () => {
 							</ListGroup.Item>
 
 							<ListGroup.Item>
-								<Button
-									type="button"
-									block
-									onClick={placeOrderHandler}
-									disabled={cartItems.length === 0}
-								>
-									Place Order
-								</Button>
+								{error && <Message variant="danger">{error}</Message>}
+							</ListGroup.Item>
+
+							<ListGroup.Item>
+								{loading ? (
+									<div className="d-flex justify-content-center align-items-center">
+										<Spinner animation="border" role="status">
+											<span className="sr-only">Loading...</span>
+										</Spinner>
+									</div>
+								) : (
+									<Button
+										type="button"
+										block
+										onClick={placeOrderHandler}
+										disabled={cartItems.length === 0}
+									>
+										Place Order
+									</Button>
+								)}
 							</ListGroup.Item>
 						</ListGroup>
 					</Card>

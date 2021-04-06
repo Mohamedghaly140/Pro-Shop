@@ -5,13 +5,15 @@ import userUpdateProfileReducer from './userUpdateProfile.reducer';
 import userDetailsReducer from './userDetails.reducer';
 import cartReducer from './cart.reducer';
 import userAuthReducer from './user.reducer';
+import orderReducer from './order.reducer';
 
 const rootReducer = combineReducers({
 	productDetail: productDetailsReducer,
-	productList: productListReducer,
-	userAuth: userAuthReducer,
-	userDetails: userDetailsReducer,
 	userUpdate: userUpdateProfileReducer,
+	productList: productListReducer,
+	userDetails: userDetailsReducer,
+	userAuth: userAuthReducer,
+	order: orderReducer,
 	cart: cartReducer,
 });
 

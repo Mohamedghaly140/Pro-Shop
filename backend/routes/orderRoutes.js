@@ -3,7 +3,7 @@ import auth from '../middleware/auth.js';
 
 const router = Router();
 
-import { addOrderItems } from '../controllers/orderController';
+import { addOrderItems } from '../controllers/orderController.js';
 
 router.post('/', auth, addOrderItems);
 
