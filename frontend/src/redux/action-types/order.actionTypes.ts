@@ -15,7 +15,24 @@ interface OrderCreateErrorAction {
 	payload: string;
 }
 
+interface OrderDetailsAction {
+	type: OrderActionTypes.OREDER_DETAILS_REQUEST;
+}
+
+interface OrderDetailsSuccessAction {
+	type: OrderActionTypes.OREDER_DETAILS_SUCCESS;
+	payload: Order;
+}
+
+interface OrderDetailsErrorAction {
+	type: OrderActionTypes.OREDER_DETAILS_FAIL;
+	payload: string;
+}
+
 export type OrderAction =
 	| OrderCreateAction
 	| OrderCreateSuccessAction
-	| OrderCreateErrorAction;
+	| OrderCreateErrorAction
+	| OrderDetailsAction
+	| OrderDetailsSuccessAction
+	| OrderDetailsErrorAction;

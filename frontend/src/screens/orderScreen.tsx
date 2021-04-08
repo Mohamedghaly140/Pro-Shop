@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {
 	Button,
 	Row,
@@ -11,60 +11,41 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, orderActions } from '../redux';
-import CheckoutSteps from '../components/CheckoutSteps';
-// import Spinner from '../components/Loader';
+import Loader from '../components/Loader';
 import Message from '../components/Message';
 
-const PlaceOrderScreen = () => {
-	const {
-		shippingAddress: { address, country, city, postalCode },
-		paymentMethod,
-		cartItems,
-	} = useSelector((state: RootState) => state.cart);
-
-	const { loading, success, order, error } = useSelector(
-		(state: RootState) => state.order
+const OrderScreen: React.FC = () => {
+	const { loading, order, error } = useSelector(
+		(state: RootState) => state.orderDetail
 	);
 
-	const history = useHistory();
-
-	const addDeciamls = (num: number) => {
-		return +(Math.round(num * 100) / 100).toFixed(2);
-	};
-
-	const itemsPrice = addDeciamls(
-		cartItems.reduce((acc, item) => acc + item.qty * item.price, 0)
-	);
-
-	const shippingPrice = addDeciamls(itemsPrice > 100 ? 100 : 0);
-	const taxPrice = addDeciamls(Number((0.15 * itemsPrice).toFixed(2)));
-	const totalPrice = itemsPrice + shippingPrice + taxPrice;
+	const { id } = useParams<{ id: string }>();
 
 	const dispatch = useDispatch();
+	console.log(id);
 
 	useEffect(() => {
-		if (success && order) {
-			history.push(`/order/${order._id}`);
-		}
-	}, [success, order]);
+		dispatch(orderActions.getOrderById(id));
+	}, [id, dispatch]);
 
-	const placeOrderHandler = () => {
-		dispatch(
-			orderActions.createOrder({
-				shippingAddress: { address, country, city, postalCode },
-				orderItems: cartItems,
-				paymentMethod,
-				itemsPrice,
-				shippingPrice,
-				taxPrice,
-				totalPrice,
-			})
-		);
-	};
+	if (loading || !order) {
+		return <Loader />;
+	}
+
+	const {
+		shippingAddress: { address, city, country, postalCode },
+		paymentMethod,
+		shippingPrice,
+		orderItems,
+		itemsPrice,
+		totalPrice,
+		taxPrice,
+	} = order;
 
 	return (
 		<>
-			<CheckoutSteps step1 step2 step3 step4 />
+			{error && <Message variant="danger">{error}</Message>}
+			<h1>Order {order._id}</h1>
 			<Row>
 				<Col md={8}>
 					<ListGroup variant="flush">
@@ -84,11 +65,11 @@ const PlaceOrderScreen = () => {
 						</ListGroup.Item>
 						<ListGroup.Item>
 							<h2>Orders</h2>
-							{cartItems.length === 0 ? (
-								<Message>Your Cart is Empty</Message>
+							{orderItems.length === 0 ? (
+								<Message>Orders is Empty</Message>
 							) : (
 								<ListGroup variant="flush">
-									{cartItems.map((item, index) => (
+									{orderItems.map((item, index) => (
 										<ListGroup.Item key={item.product}>
 											<Row>
 												<Col md={1}>
@@ -155,7 +136,7 @@ const PlaceOrderScreen = () => {
 								{error && <Message variant="danger">{error}</Message>}
 							</ListGroup.Item>
 
-							<ListGroup.Item>
+							{/* <ListGroup.Item>
 								{loading ? (
 									<div className="d-flex justify-content-center align-items-center">
 										<Spinner animation="border" role="status">
@@ -172,7 +153,7 @@ const PlaceOrderScreen = () => {
 										Place Order
 									</Button>
 								)}
-							</ListGroup.Item>
+							</ListGroup.Item> */}
 						</ListGroup>
 					</Card>
 				</Col>
@@ -181,4 +162,4 @@ const PlaceOrderScreen = () => {
 	);
 };
 
-export default PlaceOrderScreen;
+export default OrderScreen;

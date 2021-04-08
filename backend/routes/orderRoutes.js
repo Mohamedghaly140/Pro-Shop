@@ -3,10 +3,10 @@ import auth from '../middleware/auth.js';
 
 const router = Router();
 
-import { addOrderItems } from '../controllers/orderController.js';
+import { addOrderItems, getOrderById } from '../controllers/orderController.js';
 
 router.post('/', auth, addOrderItems);
 
-// router.get('/:id', auth, getOrderById);
+router.get('/:id', auth, getOrderById);
 
 export default router;

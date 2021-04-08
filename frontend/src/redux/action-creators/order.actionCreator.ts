@@ -30,19 +30,60 @@ export const createOrder = (orderData: {
 		};
 
 		try {
-			const { data } = await axios.post<Order>(
+			const { data } = await axios.post<{ message: string; order: Order }>(
 				'/api/orders',
 				{ userId: userInfo?.userId, ...orderData },
 				config
 			);
 
+			console.log(data);
+
 			dispatch({
 				type: OrderActionTypes.OREDER_CREATE_SUCCESS,
-				payload: data,
+				payload: data.order,
 			});
 		} catch (error) {
 			dispatch({
 				type: OrderActionTypes.OREDER_CREATE_FAIL,
+				payload:
+					error.response && error.response.data.message
+						? error.response.data.message
+						: error.message,
+			});
+		}
+	};
+};
+
+export const getOrderById = (orderId: string) => {
+	return async (dispatch: Dispatch<OrderAction>, getState: () => RootState) => {
+		dispatch({ type: OrderActionTypes.OREDER_DETAILS_REQUEST });
+
+		const {
+			userAuth: { userInfo },
+		} = getState();
+
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${userInfo?.token}`,
+			},
+		};
+
+		try {
+			const { data } = await axios.get<{ message: string; order: Order }>(
+				`/api/orders/${orderId}`,
+				config
+			);
+
+			console.log(data);
+
+			dispatch({
+				type: OrderActionTypes.OREDER_DETAILS_SUCCESS,
+				payload: data.order,
+			});
+		} catch (error) {
+			dispatch({
+				type: OrderActionTypes.OREDER_DETAILS_FAIL,
 				payload:
 					error.response && error.response.data.message
 						? error.response.data.message
