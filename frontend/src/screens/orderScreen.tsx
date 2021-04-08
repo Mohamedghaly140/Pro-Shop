@@ -25,21 +25,35 @@ const OrderScreen: React.FC = () => {
 	console.log(id);
 
 	useEffect(() => {
-		dispatch(orderActions.getOrderById(id));
+		if (id) {
+			dispatch(orderActions.getOrderById(id));
+		}
 	}, [id, dispatch]);
 
 	if (loading || !order) {
 		return <Loader />;
 	}
 
+	const addDeciamls = (num: number) => {
+		return +(Math.round(num * 100) / 100).toFixed(2);
+	};
+
+	const itemsPrice = addDeciamls(
+		order.orderItems.reduce((acc, item) => acc + item.qty * item.price, 0)
+	);
+
 	const {
 		shippingAddress: { address, city, country, postalCode },
+		user: { name, email },
 		paymentMethod,
 		shippingPrice,
+		deliveredAt,
+		isDelivered,
 		orderItems,
-		itemsPrice,
 		totalPrice,
 		taxPrice,
+		isPaid,
+		paidAt,
 	} = order;
 
 	return (
@@ -52,9 +66,21 @@ const OrderScreen: React.FC = () => {
 						<ListGroup.Item>
 							<h2>Shipping</h2>
 							<p>
+								<strong className="font-weight-bold">Name: </strong> {name}
+							</p>
+							<p>
+								<strong className="font-weight-bold">Email: </strong>
+								<a href={`mailto:${email}`}>{email}</a>
+							</p>
+							<p>
 								<strong className="font-weight-bold">Address: </strong>
 								{`${address}, ${city}, ${country}, ${postalCode}`}
 							</p>
+							{isDelivered ? (
+								<Message variant="success">Delivered on {deliveredAt}</Message>
+							) : (
+								<Message variant="danger">Not Delivered Yet</Message>
+							)}
 						</ListGroup.Item>
 						<ListGroup.Item>
 							<h2>Payment Method</h2>
@@ -62,6 +88,11 @@ const OrderScreen: React.FC = () => {
 								<strong className="font-weight-bold">Method: </strong>
 								{paymentMethod}
 							</p>
+							{isPaid ? (
+								<Message variant="success">Paid on {paidAt}</Message>
+							) : (
+								<Message variant="danger">Not Paid Yet</Message>
+							)}
 						</ListGroup.Item>
 						<ListGroup.Item>
 							<h2>Orders</h2>
@@ -132,9 +163,11 @@ const OrderScreen: React.FC = () => {
 								</Row>
 							</ListGroup.Item>
 
-							<ListGroup.Item>
-								{error && <Message variant="danger">{error}</Message>}
-							</ListGroup.Item>
+							{error && (
+								<ListGroup.Item>
+									<Message variant="danger">{error}</Message>
+								</ListGroup.Item>
+							)}
 
 							{/* <ListGroup.Item>
 								{loading ? (

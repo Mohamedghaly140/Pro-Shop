@@ -1,11 +1,10 @@
 import { CartItem } from './CartItem';
 
-interface OrderItem {
+interface User {
+	_id: string;
 	name: string;
-	qty: number;
-	image: string;
-	price: string;
-	product: string;
+	email: number;
+	userName: string;
 }
 
 export interface ShippingAddress {
@@ -24,7 +23,7 @@ export interface PaymentResult {
 
 export interface Order {
 	_id: string;
-	user: string;
+	user: User;
 	orderItems: CartItem[];
 	shippingAddress: ShippingAddress;
 	paymentMethod: string;

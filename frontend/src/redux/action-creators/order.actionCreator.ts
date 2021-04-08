@@ -36,8 +36,6 @@ export const createOrder = (orderData: {
 				config
 			);
 
-			console.log(data);
-
 			dispatch({
 				type: OrderActionTypes.OREDER_CREATE_SUCCESS,
 				payload: data.order,
@@ -74,8 +72,6 @@ export const getOrderById = (orderId: string) => {
 				`/api/orders/${orderId}`,
 				config
 			);
-
-			console.log(data);
 
 			dispatch({
 				type: OrderActionTypes.OREDER_DETAILS_SUCCESS,
