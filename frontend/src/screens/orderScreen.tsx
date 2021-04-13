@@ -64,7 +64,7 @@ const OrderScreen: React.FC = () => {
 				<Col md={8}>
 					<ListGroup variant="flush">
 						<ListGroup.Item>
-							<h2>Shipping</h2>
+							<h2>Shipping To</h2>
 							<p>
 								<strong className="font-weight-bold">Name: </strong> {name}
 							</p>
@@ -76,7 +76,10 @@ const OrderScreen: React.FC = () => {
 								<strong className="font-weight-bold">Address: </strong>
 								{`${address}, ${city}, ${country}`}
 							</p>
-							<p>Phone Number {phone}</p>
+							<p>
+								<strong className="font-weight-bold">Phone Number: </strong>{' '}
+								{phone}
+							</p>
 							{isDelivered ? (
 								<Message variant="success">Delivered on {deliveredAt}</Message>
 							) : (

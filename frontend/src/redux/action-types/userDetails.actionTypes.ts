@@ -15,7 +15,12 @@ interface UserDetailsErrorAction {
 	payload: string;
 }
 
+interface UserDetailsReset {
+	type: UserDetailsActionTypes.USER_DETAILS_RESET;
+}
+
 export type UserAction =
 	| UserDetailsAction
 	| UserDetailsSuccessAction
-	| UserDetailsErrorAction;
+	| UserDetailsErrorAction
+	| UserDetailsReset;

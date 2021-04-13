@@ -3,6 +3,12 @@ import { Dispatch } from 'redux';
 import { UserActionTypes } from '../actions/user.actions';
 import { UserAction } from '../action-types/user.actionTypes';
 
+import { UserOrdersAction } from '../action-types/order.actionTypes';
+import { UserOrdersActionTypes } from '../actions/order.actions';
+
+import { UserAction as UserDetailsAction } from '../action-types/userDetails.actionTypes';
+import { UserDetailsActionTypes } from '../actions/userDetails.action';
+
 export const login = (userData: { email: string; password: string }) => {
 	return async (dispatch: Dispatch<UserAction>) => {
 		dispatch({ type: UserActionTypes.USER_AUTH_REQUEST });
@@ -76,9 +82,15 @@ export const register = (userData: {
 };
 
 export const logout = () => {
-	return (dispatch: Dispatch<UserAction>) => {
+	return (
+		dispatch: Dispatch<UserAction | UserDetailsAction | UserOrdersAction>
+	) => {
 		localStorage.removeItem('userInfo');
+		localStorage.removeItem('paymentMethod');
+		localStorage.removeItem('shippingAddress');
 
 		dispatch({ type: UserActionTypes.USER_LOGOT });
+		dispatch({ type: UserOrdersActionTypes.USER_OREDERS_RESET });
+		dispatch({ type: UserDetailsActionTypes.USER_DETAILS_RESET });
 	};
 };

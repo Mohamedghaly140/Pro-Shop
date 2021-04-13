@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import moment from 'moment';
+import { useHistory, Link } from 'react-router-dom';
+import { Row, Col, Form, Button, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, userDetailsActions, userUpdateActions } from '../redux';
+import {
+	RootState,
+	userDetailsActions,
+	userUpdateActions,
+	orderActions,
+} from '../redux';
 import Spinner from '../components/Loader';
 import Message from '../components/Message';
 
@@ -22,6 +28,9 @@ const ProfileScreen: React.FC = () => {
 
 	const { userInfo } = useSelector((state: RootState) => state.userAuth);
 
+	const userOrders = useSelector((state: RootState) => state.userOrders);
+	const { loading: loadingOrders, error: errOrders, orders } = userOrders;
+
 	const { loading, user, error } = useSelector(
 		(state: RootState) => state.userDetails
 	);
@@ -32,7 +41,6 @@ const ProfileScreen: React.FC = () => {
 	);
 
 	const updatedUser = useSelector((state: RootState) => state.userUpdate.user);
-
 	const { email, userName, name, password } = updateUser;
 
 	const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,6 +55,12 @@ const ProfileScreen: React.FC = () => {
 			dispatch(userUpdateActions.updateUserProfile(updateUser));
 		}
 	};
+
+	useEffect(() => {
+		if (userInfo) {
+			dispatch(orderActions.getUserOrdersList(userInfo.userId));
+		}
+	}, [userInfo, dispatch]);
 
 	useEffect(() => {
 		if (!userInfo) {
@@ -74,9 +88,17 @@ const ProfileScreen: React.FC = () => {
 		);
 	}
 
+	if (loadingOrders && orders.length === 0) {
+		return (
+			<div className="vh-100 d-flex justify-content-center align-items-center">
+				<Spinner />
+			</div>
+		);
+	}
+
 	return (
 		<Row>
-			<Col md={4}>
+			<Col md={3}>
 				<h2>User Profile</h2>
 				{error && <Message variant="danger">{error}</Message>}
 				{message && <Message variant="danger">{message}</Message>}
@@ -149,8 +171,57 @@ const ProfileScreen: React.FC = () => {
 					)}
 				</Form>
 			</Col>
-			<Col md={8}>
+			<Col md={9}>
 				<h2>My Orders</h2>
+				{errOrders && <Message variant="danger">{errOrders}</Message>}
+				{orders.length === 0 ? (
+					<div className="text-center">
+						<h4>
+							you didn't make any orders yet, start <Link to="/">Shopping</Link>
+						</h4>
+					</div>
+				) : (
+					<Table striped bordered hover responsive className="table-sm">
+						<thead>
+							<tr>
+								<th>Order ID</th>
+								<th>Date</th>
+								<th>Total</th>
+								<th>Paid</th>
+								<th>Delivered</th>
+								<th>Order Details</th>
+							</tr>
+						</thead>
+						<tbody>
+							{orders.map(order => (
+								<tr key={order._id}>
+									<td>{order._id}</td>
+									<td>{moment(order.createdAt).format('D.dddd.MMM.YYYY')}</td>
+									<td>{order.totalPrice}</td>
+									<td className="text-center">
+										{order.isPaid ? (
+											moment(order.paidAt).format('D.dddd.MMM.YYYY')
+										) : (
+											<i className="fas fa-times text-danger" />
+										)}
+									</td>
+									<td className="text-center">
+										{order.isDelivered ? (
+											moment(order.deliveredAt).format('D.dddd.MMM.YYYY')
+										) : (
+											<i className="fas fa-times text-danger" />
+										)}
+									</td>
+									<td>
+										<Button as={Link} size="sm" to={`/order/${order._id}`}>
+											Details
+										</Button>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</Table>
+				)}
 			</Col>
 		</Row>
 	);

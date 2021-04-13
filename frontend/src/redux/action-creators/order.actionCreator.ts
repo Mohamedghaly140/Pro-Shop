@@ -1,7 +1,14 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
-import { OrderActionTypes } from '../actions/order.actions';
-import { OrderAction, OrderPayAction } from '../action-types/order.actionTypes';
+import {
+	OrderActionTypes,
+	UserOrdersActionTypes,
+} from '../actions/order.actions';
+import {
+	OrderAction,
+	OrderPayAction,
+	UserOrdersAction,
+} from '../action-types/order.actionTypes';
 import { Order, ShippingAddress } from '../../models/Order';
 import { RootState } from '../reducers';
 import { CartItem } from '../../models/CartItem';
@@ -108,7 +115,7 @@ export const updateOrderTopay = (orderId: string) => {
 		};
 
 		try {
-			const { data } = await axios.get<{ message: string; order: Order }>(
+			const { data } = await axios.put<{ message: string; order: Order }>(
 				`/api/orders/${orderId}/pay`,
 				config
 			);
@@ -120,6 +127,48 @@ export const updateOrderTopay = (orderId: string) => {
 		} catch (error) {
 			dispatch({
 				type: OrderActionTypes.OREDER_PAY_FAIL,
+				payload:
+					error.response && error.response.data.message
+						? error.response.data.message
+						: error.message,
+			});
+		}
+	};
+};
+
+export const getUserOrdersList = (userId: string) => {
+	return async (
+		dispatch: Dispatch<UserOrdersAction>,
+		getState: () => RootState
+	) => {
+		dispatch({ type: UserOrdersActionTypes.USER_OREDERS_REQUEST });
+
+		const {
+			userAuth: { userInfo },
+		} = getState();
+
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${userInfo?.token}`,
+			},
+		};
+
+		try {
+			const { data } = await axios.get<{ message: string; orders: Order[] }>(
+				`/api/orders/user/${userId}`,
+				config
+			);
+
+			console.log(data);
+
+			dispatch({
+				type: UserOrdersActionTypes.USER_OREDERS_SUCCESS,
+				payload: data.orders,
+			});
+		} catch (error) {
+			dispatch({
+				type: UserOrdersActionTypes.USER_OREDERS_FAIL,
 				payload:
 					error.response && error.response.data.message
 						? error.response.data.message

@@ -1,5 +1,12 @@
-import { OrderActionTypes } from '../actions/order.actions';
-import { OrderAction, OrderPayAction } from '../action-types/order.actionTypes';
+import {
+	OrderActionTypes,
+	UserOrdersActionTypes,
+} from '../actions/order.actions';
+import {
+	OrderAction,
+	OrderPayAction,
+	UserOrdersAction,
+} from '../action-types/order.actionTypes';
 
 import { Order } from '../../models/Order';
 
@@ -19,6 +26,12 @@ export interface OrderDetailState {
 export interface OrderPayState {
 	loading: boolean;
 	order: Order | null;
+	error: string | null;
+}
+
+export interface UserOrdersState {
+	loading: boolean;
+	orders: Order[];
 	error: string | null;
 }
 
@@ -81,6 +94,24 @@ export const orderPayReducer = (
 			return { ...state, loading: false, order: action.payload };
 		case OrderActionTypes.OREDER_PAY_FAIL:
 			return { ...state, loading: false, error: action.payload };
+		default:
+			return state;
+	}
+};
+
+export const userOrdersReducer = (
+	state: UserOrdersState = { loading: false, orders: [], error: null },
+	action: UserOrdersAction
+): UserOrdersState => {
+	switch (action.type) {
+		case UserOrdersActionTypes.USER_OREDERS_REQUEST:
+			return { ...state, loading: true };
+		case UserOrdersActionTypes.USER_OREDERS_SUCCESS:
+			return { ...state, loading: false, orders: action.payload };
+		case UserOrdersActionTypes.USER_OREDERS_FAIL:
+			return { ...state, loading: false, error: action.payload };
+		case UserOrdersActionTypes.USER_OREDERS_RESET:
+			return { loading: false, orders: [], error: null };
 		default:
 			return state;
 	}

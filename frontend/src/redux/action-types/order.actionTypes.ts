@@ -1,4 +1,7 @@
-import { OrderActionTypes } from '../actions/order.actions';
+import {
+	OrderActionTypes,
+	UserOrdersActionTypes,
+} from '../actions/order.actions';
 import { Order } from '../../models/Order';
 
 interface OrderCreateAction {
@@ -43,6 +46,25 @@ interface OrderPayErrorAction {
 	payload: string;
 }
 
+// User Orders types
+interface UserOrdersRequest {
+	type: UserOrdersActionTypes.USER_OREDERS_REQUEST;
+}
+
+interface UserOrdersSuccessAction {
+	type: UserOrdersActionTypes.USER_OREDERS_SUCCESS;
+	payload: Order[];
+}
+
+interface UserOrdersErrorAction {
+	type: UserOrdersActionTypes.USER_OREDERS_FAIL;
+	payload: string;
+}
+
+interface UserOrdersReset {
+	type: UserOrdersActionTypes.USER_OREDERS_RESET;
+}
+
 export type OrderAction =
 	| OrderCreateAction
 	| OrderCreateSuccessAction
@@ -55,3 +77,9 @@ export type OrderPayAction =
 	| OrderPayActionReq
 	| OrderPaySuccessAction
 	| OrderPayErrorAction;
+
+export type UserOrdersAction =
+	| UserOrdersRequest
+	| UserOrdersSuccessAction
+	| UserOrdersErrorAction
+	| UserOrdersReset;

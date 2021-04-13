@@ -36,4 +36,6 @@ export interface Order {
 	isDelivered: boolean;
 	paidAt: Date;
 	deliveredAt: Date;
+	createdAt: Date;
+	updatedAt: Date;
 }

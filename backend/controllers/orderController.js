@@ -116,3 +116,35 @@ export const updateOrderToPay = asyncHandler(async (req, res) => {
 		order: order,
 	});
 });
+
+// @desc    Get Logged In User Orders
+// @route   GET /api/orders/user/:userId
+// @access  Private
+export const getOrdersByUserId = asyncHandler(async (req, res) => {
+	const userId = req.params.userId;
+
+	if (req.userData.userId !== userId) {
+		res.status(401);
+		throw new Error(
+			'You are not allowed to vist the route, authorization is denied'
+		);
+	}
+
+	let orders;
+	try {
+		orders = await Order.find({ user: userId });
+
+		if (orders.length === 0) {
+			res.status(404);
+			throw new Error('you do not have any orders yet');
+		}
+	} catch (error) {
+		res.status(500);
+		throw new Error('Something went wrong, please try again later');
+	}
+
+	res.status(200).json({
+		message: 'find Orders successfuly',
+		orders: orders,
+	});
+});

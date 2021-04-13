@@ -7,11 +7,14 @@ import {
 	addOrderItems,
 	getOrderById,
 	updateOrderToPay,
+	getOrdersByUserId,
 } from '../controllers/orderController.js';
 
 router.post('/', auth, addOrderItems);
 
 router.get('/:id', auth, getOrderById);
+
+router.get('/user/:userId', auth, getOrdersByUserId);
 
 router.get('/:id/pay', auth, updateOrderToPay);
 
