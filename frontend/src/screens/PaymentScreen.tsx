@@ -47,6 +47,7 @@ const PaymentScreen = () => {
 							id="PayPal"
 							name="paymentMethod"
 							value="PayPal"
+							disabled
 							checked={paymentMthd === 'PayPal'}
 							onChange={changeHandler}
 						/>

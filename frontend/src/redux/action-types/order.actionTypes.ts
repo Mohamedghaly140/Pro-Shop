@@ -29,6 +29,20 @@ interface OrderDetailsErrorAction {
 	payload: string;
 }
 
+interface OrderPayActionReq {
+	type: OrderActionTypes.OREDER_PAY_REQUEST;
+}
+
+interface OrderPaySuccessAction {
+	type: OrderActionTypes.OREDER_PAY_SUCCESS;
+	payload: Order;
+}
+
+interface OrderPayErrorAction {
+	type: OrderActionTypes.OREDER_PAY_FAIL;
+	payload: string;
+}
+
 export type OrderAction =
 	| OrderCreateAction
 	| OrderCreateSuccessAction
@@ -36,3 +50,8 @@ export type OrderAction =
 	| OrderDetailsAction
 	| OrderDetailsSuccessAction
 	| OrderDetailsErrorAction;
+
+export type OrderPayAction =
+	| OrderPayActionReq
+	| OrderPaySuccessAction
+	| OrderPayErrorAction;

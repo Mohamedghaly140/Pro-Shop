@@ -17,7 +17,7 @@ import Message from '../components/Message';
 
 const PlaceOrderScreen = () => {
 	const {
-		shippingAddress: { address, country, city, postalCode },
+		shippingAddress: { address, country, city, phone },
 		paymentMethod,
 		cartItems,
 	} = useSelector((state: RootState) => state.cart);
@@ -51,7 +51,7 @@ const PlaceOrderScreen = () => {
 	const placeOrderHandler = () => {
 		dispatch(
 			orderActions.createOrder({
-				shippingAddress: { address, country, city, postalCode },
+				shippingAddress: { address, country, city, phone },
 				orderItems: cartItems,
 				paymentMethod,
 				itemsPrice,
@@ -72,8 +72,9 @@ const PlaceOrderScreen = () => {
 							<h2>Shipping</h2>
 							<p>
 								<strong className="font-weight-bold">Address: </strong>
-								{`${address}, ${city}, ${country}, ${postalCode}`}
+								{`${address}, ${city}, ${country}`}
 							</p>
+							<p>Phone Number {phone}</p>
 						</ListGroup.Item>
 						<ListGroup.Item>
 							<h2>Payment Method</h2>

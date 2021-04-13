@@ -18,11 +18,13 @@ const CheckoutSteps: React.FC<CheckoutStepsProps> = ({
 		<Nav className="justify-content-center mb-3">
 			<Nav.Item>
 				{step1 ? (
-					<Nav.Link as={Link} to="/login">
+					<Nav.Link as={Link} to="/login" className="pl-0">
 						Sign In
 					</Nav.Link>
 				) : (
-					<Nav.Link disabled>Sign In</Nav.Link>
+					<Nav.Link disabled className="pl-0">
+						Sign In
+					</Nav.Link>
 				)}
 			</Nav.Item>
 
@@ -48,11 +50,13 @@ const CheckoutSteps: React.FC<CheckoutStepsProps> = ({
 
 			<Nav.Item>
 				{step4 ? (
-					<Nav.Link as={Link} to="/placeorder">
+					<Nav.Link as={Link} to="/placeorder" className="pr-0">
 						Place Order
 					</Nav.Link>
 				) : (
-					<Nav.Link disabled>Place Order</Nav.Link>
+					<Nav.Link disabled className="pr-0">
+						Place Order
+					</Nav.Link>
 				)}
 			</Nav.Item>
 		</Nav>

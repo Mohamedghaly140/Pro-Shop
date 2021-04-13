@@ -10,7 +10,7 @@ interface User {
 export interface ShippingAddress {
 	address: string;
 	city: string;
-	postalCode: string;
+	phone: string;
 	country: string;
 }
 

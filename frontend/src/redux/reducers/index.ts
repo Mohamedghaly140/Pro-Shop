@@ -5,7 +5,10 @@ import userUpdateProfileReducer from './userUpdateProfile.reducer';
 import userDetailsReducer from './userDetails.reducer';
 import cartReducer from './cart.reducer';
 import userAuthReducer from './user.reducer';
-import orderReducer, { orderDetailReducer } from './order.reducer';
+import orderReducer, {
+	orderDetailReducer,
+	orderPayReducer,
+} from './order.reducer';
 
 const rootReducer = combineReducers({
 	productDetail: productDetailsReducer,
@@ -16,6 +19,7 @@ const rootReducer = combineReducers({
 	order: orderReducer,
 	cart: cartReducer,
 	orderDetail: orderDetailReducer,
+	orderPay: orderPayReducer,
 });
 
 export default rootReducer;

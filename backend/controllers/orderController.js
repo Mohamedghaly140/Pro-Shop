@@ -81,3 +81,38 @@ export const getOrderById = asyncHandler(async (req, res) => {
 		order: order,
 	});
 });
+
+// @desc    Update order to Pay
+// @route   PUT /api/orders/:id/pay
+// @access  Private
+export const updateOrderToPay = asyncHandler(async (req, res) => {
+	const orderId = req.params.id;
+
+	let order;
+	try {
+		order = await Order.findById(orderId);
+
+		if (!order) {
+			res.status(404);
+			throw new Error('order not found');
+		}
+
+		if (!req.userData.isAdmin) {
+			res.status(401);
+			throw new Error('User is not admin, You Not allowed to Edit this');
+		}
+
+		order.isPiad = true;
+		order.piadAt = Date.now();
+
+		order = await order.save();
+	} catch (error) {
+		res.status(500);
+		throw new Error('Something went wrong, please try again later');
+	}
+
+	res.status(200).json({
+		message: 'Order Payed successfuly',
+		order: order,
+	});
+});

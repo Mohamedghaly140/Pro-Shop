@@ -14,7 +14,7 @@ const initialState: CartState = {
 	cartItems: [],
 	paymentMethod: 'PayPal',
 	shippingAddress: {
-		postalCode: '',
+		phone: '',
 		address: '',
 		country: '',
 		city: '',

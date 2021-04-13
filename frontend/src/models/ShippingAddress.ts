@@ -1,5 +1,5 @@
 export interface ShippingAddress {
-	postalCode: string;
+	phone: string;
 	address: string;
 	country: string;
 	city: string;

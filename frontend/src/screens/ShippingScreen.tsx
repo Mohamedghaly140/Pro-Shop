@@ -17,7 +17,7 @@ const ShippingScreen = () => {
 
 	const dispatch = useDispatch();
 
-	const { address, city, postalCode, country } = shipDetails;
+	const { address, city, phone, country } = shipDetails;
 
 	const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setShipDetails({ ...shipDetails, [event.target.name]: event.target.value });
@@ -60,13 +60,13 @@ const ShippingScreen = () => {
 					></Form.Control>
 				</Form.Group>
 
-				<Form.Group controlId="postalCode">
-					<Form.Label>Postal Code</Form.Label>
+				<Form.Group controlId="phone">
+					<Form.Label>Phone Number</Form.Label>
 					<Form.Control
 						type="number"
-						placeholder="Enter Your Postal Code"
-						value={postalCode}
-						name="postalCode"
+						placeholder="Enter Your Phone Number"
+						value={phone}
+						name="phone"
 						inputMode="numeric"
 						required
 						onChange={changeHandler}

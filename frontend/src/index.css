@@ -34,3 +34,15 @@ a:disabled {
 	pointer-events: auto !important;
 	cursor: not-allowed !important;
 }
+
+input[type='radio']:disabled {
+	pointer-events: auto !important;
+	cursor: not-allowed !important;
+}
+
+.form-check-input[disabled] ~ .form-check-label,
+.form-check-input:disabled ~ .form-check-label {
+	pointer-events: auto !important;
+	cursor: not-allowed !important;
+	text-decoration: line-through;
+}

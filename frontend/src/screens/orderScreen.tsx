@@ -43,7 +43,7 @@ const OrderScreen: React.FC = () => {
 	);
 
 	const {
-		shippingAddress: { address, city, country, postalCode },
+		shippingAddress: { address, city, country, phone },
 		user: { name, email },
 		paymentMethod,
 		shippingPrice,
@@ -74,8 +74,9 @@ const OrderScreen: React.FC = () => {
 							</p>
 							<p>
 								<strong className="font-weight-bold">Address: </strong>
-								{`${address}, ${city}, ${country}, ${postalCode}`}
+								{`${address}, ${city}, ${country}`}
 							</p>
+							<p>Phone Number {phone}</p>
 							{isDelivered ? (
 								<Message variant="success">Delivered on {deliveredAt}</Message>
 							) : (
@@ -187,6 +188,21 @@ const OrderScreen: React.FC = () => {
 									</Button>
 								)}
 							</ListGroup.Item> */}
+							<ListGroup.Item>
+								{!isPaid && (
+									<Message variant="success">
+										<h6>order Placed Successfuly</h6>
+										We will call you soon to confirm the order
+									</Message>
+								)}
+								{paymentMethod === 'VodafonCash' && (
+									<p>
+										Call{' '}
+										<strong className="font-weight-bold">01029947010</strong> To
+										pay by Vodafone Cash
+									</p>
+								)}
+							</ListGroup.Item>
 						</ListGroup>
 					</Card>
 				</Col>
