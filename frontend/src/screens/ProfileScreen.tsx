@@ -174,7 +174,7 @@ const ProfileScreen: React.FC = () => {
 				<h2>My Orders</h2>
 				{errOrders && <Message variant="danger">{errOrders}</Message>}
 				{orders.length === 0 ? (
-					<div className="text-center">
+					<div className="text-center py-3 mt-3">
 						<h4>
 							you didn't make any orders yet, start <Link to="/">Shopping</Link>
 						</h4>

@@ -12,7 +12,7 @@ export interface CartState {
 
 const initialState: CartState = {
 	cartItems: [],
-	paymentMethod: 'PayPal',
+	paymentMethod: 'VodafoneCash',
 	shippingAddress: {
 		phone: '',
 		address: '',

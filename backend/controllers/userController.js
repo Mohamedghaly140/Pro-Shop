@@ -124,7 +124,7 @@ export const login = asyncHandler(async (req, res) => {
 
 	if (!exsitingUser) {
 		res.status(422);
-		throw new Error('Invalid email or password, could not login', 422);
+		throw new Error('You are not registered, sign up first', 422);
 	}
 
 	let isValidPassword;

@@ -1,4 +1,8 @@
-import { UserActionTypes, UserListActionTypes } from '../actions/user.actions';
+import {
+	UserActionTypes,
+	UserListActionTypes,
+	UserDeleteActionTypes,
+} from '../actions/user.actions';
 import { User } from '../../models/User';
 
 interface UserLoginAction {
@@ -50,3 +54,23 @@ export type UsersListAction =
 	| UserListRequestAction
 	| UserListSuccessAction
 	| UserListErrorAction;
+
+// User Delete Actions
+interface UserDeleteRequestAction {
+	type: UserDeleteActionTypes.USER_DELETE_REQUEST;
+}
+
+interface UserDeleteSuccessAction {
+	type: UserDeleteActionTypes.USER_DELETE_SUCCESS;
+	payload: { user: User; message: string };
+}
+
+interface UserDeleteErrorAction {
+	type: UserDeleteActionTypes.USER_DELETE_FAIL;
+	payload: string;
+}
+
+export type UserDeleteAction =
+	| UserDeleteRequestAction
+	| UserDeleteSuccessAction
+	| UserDeleteErrorAction;

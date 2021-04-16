@@ -1,10 +1,12 @@
-import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Container, Navbar, Nav, NavDropdown, Badge } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, userActions } from '../redux';
 
 const Header: React.FC = () => {
 	const { userInfo } = useSelector((state: RootState) => state.userAuth);
+
+	const { cartItems } = useSelector((state: RootState) => state.cart);
 
 	const dispatch = useDispatch();
 
@@ -20,11 +22,25 @@ const Header: React.FC = () => {
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="ml-auto">
-							<Nav.Link as={NavLink} to="/cart">
+							<Nav.Link as={NavLink} to="/cart" className="position-relative">
+								<Badge
+									variant="light"
+									className="position-absolute font-weight-bold"
+									style={{
+										top: '-5px',
+										left: '1%',
+										borderRadius: '50%',
+									}}
+								>
+									{cartItems.length}
+								</Badge>
 								<i className="fas fa-shopping-cart"></i> Cart
 							</Nav.Link>
 							{userInfo ? (
-								<NavDropdown title={userInfo.name} id={userInfo.userName}>
+								<NavDropdown
+									title={`Hi, ${userInfo.name}`}
+									id={userInfo.userName}
+								>
 									<NavDropdown.Item as={NavLink} to="/profile">
 										<i className="far fa-address-card" /> Profile
 									</NavDropdown.Item>

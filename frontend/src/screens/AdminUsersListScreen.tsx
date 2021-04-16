@@ -9,6 +9,9 @@ import Message from '../components/Message';
 
 const AdminUsersListScreen = () => {
 	const { userInfo } = useSelector((state: RootState) => state.userAuth);
+	const { success: successDelete, message: deleteMessage } = useSelector(
+		(state: RootState) => state.userDelete
+	);
 
 	const { loading, users, error } = useSelector(
 		(state: RootState) => state.usersList
@@ -18,7 +21,9 @@ const AdminUsersListScreen = () => {
 	const history = useHistory();
 
 	const deleteUserHandler = (userId: string) => {
-		console.log(userId);
+		if (window.confirm('Are you sure you to delete this user?')) {
+			dispatch(usersListActions.deleteUser(userId));
+		}
 	};
 
 	useEffect(() => {
@@ -27,7 +32,7 @@ const AdminUsersListScreen = () => {
 		} else {
 			history.push('/login');
 		}
-	}, [userInfo, history, dispatch]);
+	}, [userInfo, history, successDelete, dispatch]);
 
 	if (loading) {
 		return (
@@ -41,6 +46,7 @@ const AdminUsersListScreen = () => {
 		<>
 			<h1>Users</h1>
 			{error && <Message variant="danger">{error}</Message>}
+			{deleteMessage && <Message variant="success">{deleteMessage}</Message>}
 			{users.length === 0 ? (
 				<div className="text-center">
 					<p>There is no users yet</p>

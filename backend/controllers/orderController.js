@@ -134,10 +134,10 @@ export const getOrdersByUserId = asyncHandler(async (req, res) => {
 	try {
 		orders = await Order.find({ user: userId });
 
-		if (orders.length === 0) {
-			res.status(404);
-			throw new Error('you do not have any orders yet');
-		}
+		// if (orders.length === 0) {
+		// 	res.status(404);
+		// 	throw new Error('you do not have any orders yet');
+		// }
 	} catch (error) {
 		res.status(500);
 		throw new Error('Something went wrong, please try again later');
