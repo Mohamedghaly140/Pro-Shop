@@ -285,6 +285,32 @@ export const getAllUsers = asyncHandler(async (req, res) => {
 
 	res.status(200).json({
 		message: 'Find All Users successfuly',
-		users: users,
+		users: users.map(u => u.toObject({ getters: true })),
 	});
+});
+
+// @desc    Delte User
+// @route   DElETE /api/users/:id
+// @access  Private/Admin
+export const deleteUserById = asyncHandler(async (req, res) => {
+	const userId = req.params.id;
+
+	const user = await User.findById(userId);
+
+	if (user) {
+		try {
+			await user.remove();
+
+			res.status(200).json({
+				message: 'User deleted successfuly',
+				user,
+			});
+		} catch (error) {
+			res.status(500);
+			throw new Error('Could not delete this user, try again later');
+		}
+	} else {
+		res.status(404);
+		throw new Error('User Not Found');
+	}
 });

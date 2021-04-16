@@ -15,7 +15,7 @@ const Header: React.FC = () => {
 			<Navbar variant="dark" expand="md" collapseOnSelect>
 				<Container>
 					<Navbar.Brand as={NavLink} to="/" exact>
-						ProShop
+						SG Couture
 					</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
@@ -26,16 +26,29 @@ const Header: React.FC = () => {
 							{userInfo ? (
 								<NavDropdown title={userInfo.name} id={userInfo.userName}>
 									<NavDropdown.Item as={NavLink} to="/profile">
-										<i className="far fa-address-card"></i> Profile
+										<i className="far fa-address-card" /> Profile
 									</NavDropdown.Item>
 									<NavDropdown.Item onClick={logoutHandler}>
-										<i className="fas fa-sign-out-alt"></i> Logout
+										<i className="fas fa-sign-out-alt" /> Logout
 									</NavDropdown.Item>
 								</NavDropdown>
 							) : (
 								<Nav.Link as={NavLink} to="/login">
 									<i className="fas fa-user"></i> Sign In
 								</Nav.Link>
+							)}
+							{userInfo && userInfo.isAdmin && (
+								<NavDropdown title="Admin" id={userInfo.userName}>
+									<NavDropdown.Item as={NavLink} to="/admin/users">
+										<i className="fas fa-users" /> Users
+									</NavDropdown.Item>
+									<NavDropdown.Item as={NavLink} to="/admin/products">
+										<i className="fab fa-product-hunt" /> Products
+									</NavDropdown.Item>
+									<NavDropdown.Item as={NavLink} to="/admin/orders">
+										<i className="fab fa-first-order-alt" /> Orders
+									</NavDropdown.Item>
+								</NavDropdown>
 							)}
 						</Nav>
 					</Navbar.Collapse>

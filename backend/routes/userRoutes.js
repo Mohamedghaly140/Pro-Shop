@@ -8,6 +8,7 @@ import {
 	signup,
 	getAllUsers,
 	getUserProfile,
+	deleteUserById,
 	updateUserProfile,
 } from '../controllers/userController.js';
 
@@ -15,10 +16,11 @@ router.post('/login', login);
 
 router.post('/signup', signup);
 
-router.get('/:id', auth, admin, getAllUsers);
-
 router.get('/profile', auth, getUserProfile);
 
 router.put('/profile', auth, updateUserProfile);
+
+router.get('/admin/:id', auth, admin, getAllUsers);
+router.delete('/admin/:id', auth, admin, deleteUserById);
 
 export default router;

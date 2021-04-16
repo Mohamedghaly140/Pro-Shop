@@ -88,14 +88,13 @@ const ProfileScreen: React.FC = () => {
 		);
 	}
 
-	if (loadingOrders && orders.length === 0) {
+	if (loadingOrders) {
 		return (
 			<div className="vh-100 d-flex justify-content-center align-items-center">
 				<Spinner />
 			</div>
 		);
 	}
-
 	return (
 		<Row>
 			<Col md={3}>
@@ -212,7 +211,7 @@ const ProfileScreen: React.FC = () => {
 											<i className="fas fa-times text-danger" />
 										)}
 									</td>
-									<td>
+									<td className="text-center">
 										<Button as={Link} size="sm" to={`/order/${order._id}`}>
 											Details
 										</Button>

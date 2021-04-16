@@ -160,8 +160,6 @@ export const getUserOrdersList = (userId: string) => {
 				config
 			);
 
-			console.log(data);
-
 			dispatch({
 				type: UserOrdersActionTypes.USER_OREDERS_SUCCESS,
 				payload: data.orders,

@@ -45,54 +45,56 @@ const LoginScreen: React.FC = () => {
 
 	return (
 		<FormContainer>
-			<h1>Sign In</h1>
-			{error && <Message variant="danger">{error}</Message>}
-			{loading && <Spinner />}
-			<Form onSubmit={loginHandler}>
-				<Form.Group controlId="email">
-					<Form.Label>Email Address</Form.Label>
-					<Form.Control
-						type="email"
-						placeholder="Please Enter Your Email"
-						value={email}
-						name="email"
-						required
-						onChange={changeHandler}
-						inputMode="email"
-					></Form.Control>
-				</Form.Group>
+			<div className="py-5 my-5">
+				<h1>Sign In</h1>
+				{error && <Message variant="danger">{error}</Message>}
+				{loading && <Spinner />}
+				<Form onSubmit={loginHandler}>
+					<Form.Group controlId="email">
+						<Form.Label>Email Address</Form.Label>
+						<Form.Control
+							type="email"
+							placeholder="Please Enter Your Email"
+							value={email}
+							name="email"
+							required
+							onChange={changeHandler}
+							inputMode="email"
+						></Form.Control>
+					</Form.Group>
 
-				<Form.Group controlId="password">
-					<Form.Label>Password</Form.Label>
-					<Form.Control
-						type="password"
-						placeholder="Please Enter Password"
-						value={password}
-						name="password"
-						required
-						onChange={changeHandler}
-					></Form.Control>
-				</Form.Group>
+					<Form.Group controlId="password">
+						<Form.Label>Password</Form.Label>
+						<Form.Control
+							type="password"
+							placeholder="Please Enter Password"
+							value={password}
+							name="password"
+							required
+							onChange={changeHandler}
+						></Form.Control>
+					</Form.Group>
 
-				<Button
-					type="submit"
-					variant="primary"
-					disabled={email === '' || password === ''}
-				>
-					Sign In
-				</Button>
+					<Button
+						type="submit"
+						variant="primary"
+						disabled={email === '' || password === ''}
+					>
+						Sign In
+					</Button>
 
-				<Row className="py-3">
-					<Col>
-						New Customer?{' '}
-						<Link
-							to={redirect ? `/register?redirect=${redirect}` : '/register'}
-						>
-							Register
-						</Link>
-					</Col>
-				</Row>
-			</Form>
+					<Row className="py-3">
+						<Col>
+							New Customer?{' '}
+							<Link
+								to={redirect ? `/register?redirect=${redirect}` : '/register'}
+							>
+								Register
+							</Link>
+						</Col>
+					</Row>
+				</Form>
+			</div>
 		</FormContainer>
 	);
 };

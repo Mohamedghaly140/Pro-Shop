@@ -22,6 +22,7 @@ export interface PaymentResult {
 }
 
 export interface Order {
+	id: string;
 	_id: string;
 	user: User;
 	orderItems: CartItem[];

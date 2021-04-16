@@ -57,7 +57,7 @@ const RegisterScreen: React.FC = () => {
 			<h1>Sign Up New Account</h1>
 			{error && <Message variant="danger">{error}</Message>}
 			{message && <Message variant="danger">{message}</Message>}
-			<Form onSubmit={registerHandler}>
+			<Form onSubmit={registerHandler} className="py-2">
 				{loading ? (
 					<Spinner />
 				) : (

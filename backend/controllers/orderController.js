@@ -145,6 +145,6 @@ export const getOrdersByUserId = asyncHandler(async (req, res) => {
 
 	res.status(200).json({
 		message: 'find Orders successfuly',
-		orders: orders,
+		orders: orders.map(order => order.toObject({ getters: true })),
 	});
 });

@@ -92,5 +92,6 @@ export const logout = () => {
 		dispatch({ type: UserActionTypes.USER_LOGOT });
 		dispatch({ type: UserOrdersActionTypes.USER_OREDERS_RESET });
 		dispatch({ type: UserDetailsActionTypes.USER_DETAILS_RESET });
+		window.history.pushState({}, '', '/');
 	};
 };
