@@ -25,6 +25,7 @@ export default (req, res, next) => {
 
 		req.userData = {
 			userId: decodedToken.userId,
+			isAdmin: decodedToken.isAdmin,
 			userName: decodedToken.userName,
 		};
 
@@ -32,5 +33,14 @@ export default (req, res, next) => {
 	} catch (error) {
 		res.status(403);
 		throw new Error('Authentication faild!');
+	}
+};
+
+export const admin = (req, res, next) => {
+	if (req.userData && req.userData.isAdmin) {
+		next();
+	} else {
+		res.status(401);
+		throw new Error('Not Authorization as an admin');
 	}
 };

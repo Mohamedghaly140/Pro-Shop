@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import auth from '../middleware/auth.js';
+import auth, { admin } from '../middleware/auth.js';
 
 const router = Router();
 
 import {
 	login,
 	signup,
+	getAllUsers,
 	getUserProfile,
 	updateUserProfile,
 } from '../controllers/userController.js';
@@ -13,6 +14,8 @@ import {
 router.post('/login', login);
 
 router.post('/signup', signup);
+
+router.get('/:id', auth, admin, getAllUsers);
 
 router.get('/profile', auth, getUserProfile);
 

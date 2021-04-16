@@ -150,6 +150,7 @@ export const login = asyncHandler(async (req, res) => {
 			{
 				userId: exsitingUser.id,
 				email: exsitingUser.email,
+				isAdmin: exsitingUser.isAdmin,
 				userName: exsitingUser.userName,
 			},
 			process.env.JWT_SECRET_KEY,
@@ -226,6 +227,7 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 				{
 					userId: updatedUser.id,
 					email: updatedUser.email,
+					isAdmin: updatedUser.isAdmin,
 					userName: updatedUser.userName,
 				},
 				process.env.JWT_SECRET_KEY,
@@ -249,4 +251,40 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 		res.status(404);
 		throw new Error('User Not Found');
 	}
+});
+
+// @desc    Get All Users
+// @route   PUT /api/users/:id
+// @access  Private/Admin
+export const getAllUsers = asyncHandler(async (req, res) => {
+	const userId = req.params.id;
+
+	let adminUser;
+	try {
+		adminUser = await User.findById(userId);
+
+		if (!adminUser) {
+			res.status(404);
+			throw new Error('User Not Found');
+		}
+	} catch (error) {
+		res.status(500);
+		throw new Error('Something went wrong, please try again later');
+	}
+
+	const users = await User.find({});
+
+	if (
+		!adminUser.isAdmin &&
+		!req.userData.isAdmin &&
+		req.userData.userId !== userId
+	) {
+		res.status(401);
+		throw new Error('Not Authorization as an admin');
+	}
+
+	res.status(200).json({
+		message: 'Find All Users successfuly',
+		users: users,
+	});
 });
