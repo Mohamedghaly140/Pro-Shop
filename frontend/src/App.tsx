@@ -13,6 +13,7 @@ import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import AdminUsersListScreen from './screens/AdminUsersListScreen';
+import EditUserScreen from './screens/EditUserScreen';
 
 const App: React.FC = () => {
 	return (
@@ -24,6 +25,7 @@ const App: React.FC = () => {
 					<Route path="/payment" component={PaymentScreen} />
 					<Route path="/placeorder" component={PlaceOrderScreen} />
 					<Route path="/admin/users" component={AdminUsersListScreen} />
+					<Route path="/admin/user/:id/edit" component={EditUserScreen} />
 					<Route path="/register" component={RegisterScreen} />
 					<Route path="/profile" component={ProfileScreen} />
 					<Route path="/product/:id" component={ProductScreen} />

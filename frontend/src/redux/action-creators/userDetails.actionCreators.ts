@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 import { UserDetailsActionTypes } from '../actions/userDetails.action';
 import { UserAction } from '../action-types/userDetails.actionTypes';
 import { RootState } from '../reducers';
+import { User } from '../../models/User';
 
 export const getUserProfile = (id: string) => {
 	return async (dispatch: Dispatch<UserAction>, getState: () => RootState) => {
@@ -20,11 +21,14 @@ export const getUserProfile = (id: string) => {
 		};
 
 		try {
-			const { data } = await axios.get(`/api/users/${id}`, config);
+			const { data } = await axios.get<{ message: string; user: User }>(
+				`/api/users/${id}`,
+				config
+			);
 
 			dispatch({
 				type: UserDetailsActionTypes.USER_DETAILS_SUCCESS,
-				payload: data,
+				payload: data.user,
 			});
 		} catch (error) {
 			dispatch({

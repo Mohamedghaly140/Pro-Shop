@@ -86,7 +86,7 @@ const AdminUsersListScreen = () => {
 										size="sm"
 										as={Link}
 										variant="light"
-										to={`/user/${user.id}/edit`}
+										to={`/admin/user/${user.id}/edit`}
 									>
 										<i className="fas fa-edit" />
 									</Button>
