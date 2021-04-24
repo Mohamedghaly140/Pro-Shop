@@ -2,6 +2,7 @@ import {
 	UserActionTypes,
 	UserListActionTypes,
 	UserDeleteActionTypes,
+	UserUpdateActionTypes,
 } from '../actions/user.actions';
 import { User } from '../../models/User';
 
@@ -74,3 +75,23 @@ export type UserDeleteAction =
 	| UserDeleteRequestAction
 	| UserDeleteSuccessAction
 	| UserDeleteErrorAction;
+
+// User Update Actions
+interface UserUpdateRequestAction {
+	type: UserUpdateActionTypes.USER_UPDATE_REQUEST;
+}
+
+interface UserUpdateSuccessAction {
+	type: UserUpdateActionTypes.USER_UPDATE_SUCCESS;
+	payload: { user: User; message: string };
+}
+
+interface UserUpdateErrorAction {
+	type: UserUpdateActionTypes.USER_UPDATE_FAIL;
+	payload: string;
+}
+
+export type UserUpdateAction =
+	| UserUpdateRequestAction
+	| UserUpdateSuccessAction
+	| UserUpdateErrorAction;
