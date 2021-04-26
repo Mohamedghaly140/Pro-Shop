@@ -91,7 +91,12 @@ interface UserUpdateErrorAction {
 	payload: string;
 }
 
+interface UserUpdateResetAction {
+	type: UserUpdateActionTypes.USER_UPDATE_RESET;
+}
+
 export type UserUpdateAction =
 	| UserUpdateRequestAction
 	| UserUpdateSuccessAction
-	| UserUpdateErrorAction;
+	| UserUpdateErrorAction
+	| UserUpdateResetAction;

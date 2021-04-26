@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
+import { useParams, useHistory, Link } from 'react-router-dom';
+import { Form, Button, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, userDetailsActions } from '../redux';
+import { RootState, userDetailsActions, usersListActions } from '../redux';
 import FormContainer from '../components/FormContainer';
-import Spinner from '../components/Loader';
+import Loader from '../components/Loader';
 import Message from '../components/Message';
 
 const EditUserScreen: React.FC = () => {
@@ -17,13 +17,20 @@ const EditUserScreen: React.FC = () => {
 
 	const { id: userId } = useParams<{ id: string }>();
 
-	// const history = useHistory();
+	const history = useHistory();
 
 	const dispatch = useDispatch();
 
 	const { loading, user: userDetails, error } = useSelector(
 		(state: RootState) => state.userDetails
 	);
+
+	const {
+		message,
+		error: adminUodateError,
+		success: adminUpdateSuccess,
+		loading: adminUpdateLoading,
+	} = useSelector((state: RootState) => state.userUpdateAdmin);
 
 	const { email, userName, name } = user;
 
@@ -33,20 +40,26 @@ const EditUserScreen: React.FC = () => {
 
 	const registerHandler = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		dispatch(usersListActions.editUser(userId, { ...user, isAdmin }));
 	};
 
 	useEffect(() => {
-		if (!userDetails || userDetails._id !== userId) {
-			dispatch(userDetailsActions.getUserProfile(userId));
+		if (adminUpdateSuccess) {
+			dispatch(usersListActions.resetUser());
+			history.push('/admin/users');
 		} else {
-			setUser({
-				name: userDetails.name,
-				email: userDetails.email,
-				userName: userDetails.userName,
-			});
-			setIsAdmin(userDetails.isAdmin);
+			if (!userDetails || userDetails._id !== userId) {
+				dispatch(userDetailsActions.getUserProfile(userId));
+			} else {
+				setUser({
+					name: userDetails.name,
+					email: userDetails.email,
+					userName: userDetails.userName,
+				});
+				setIsAdmin(userDetails.isAdmin);
+			}
 		}
-	}, [userDetails, userId, dispatch]);
+	}, [userDetails, userId, adminUpdateSuccess, history, dispatch]);
 
 	return (
 		<>
@@ -56,9 +69,13 @@ const EditUserScreen: React.FC = () => {
 			<FormContainer>
 				<h1>Edit User</h1>
 				{error && <Message variant="danger">{error}</Message>}
+				{message && <Message variant="success">{message}</Message>}
+				{adminUodateError && (
+					<Message variant="danger">{adminUodateError}</Message>
+				)}
 				<Form onSubmit={registerHandler} className="py-2">
 					{loading ? (
-						<Spinner />
+						<Loader />
 					) : (
 						<>
 							<Form.Group controlId="name">
@@ -103,20 +120,23 @@ const EditUserScreen: React.FC = () => {
 									type="checkbox"
 									label="Is Admin"
 									checked={isAdmin}
-									required
 									onChange={e => setIsAdmin(e.target.checked)}
 								/>
 							</Form.Group>
 						</>
 					)}
 
-					<Button
-						type="submit"
-						variant="primary"
-						disabled={name === '' || userName === '' || email === ''}
-					>
-						Update User
-					</Button>
+					{adminUpdateLoading ? (
+						<Spinner animation="border" />
+					) : (
+						<Button
+							type="submit"
+							variant="primary"
+							disabled={name === '' || userName === '' || email === ''}
+						>
+							Update User
+						</Button>
+					)}
 				</Form>
 			</FormContainer>
 		</>

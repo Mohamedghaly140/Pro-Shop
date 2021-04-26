@@ -3,7 +3,10 @@ import productListReducer from './productList.reducer';
 import productDetailsReducer from './productDetails.reducer';
 import userUpdateProfileReducer from './userUpdateProfile.reducer';
 import userDetailsReducer from './userDetails.reducer';
-import usersListReducer, { userDeleteReducer } from './usersList.reducer';
+import usersListReducer, {
+	userDeleteReducer,
+	userUpdateReducer,
+} from './usersList.reducer';
 import userAuthReducer from './user.reducer';
 import cartReducer from './cart.reducer';
 import orderReducer, {
@@ -25,6 +28,7 @@ const rootReducer = combineReducers({
 	userOrders: userOrdersReducer,
 	usersList: usersListReducer,
 	userDelete: userDeleteReducer,
+	userUpdateAdmin: userUpdateReducer,
 });
 
 export default rootReducer;

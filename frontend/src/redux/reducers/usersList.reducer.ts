@@ -1,10 +1,12 @@
 import {
 	UserListActionTypes,
 	UserDeleteActionTypes,
+	UserUpdateActionTypes,
 } from '../actions/user.actions';
 import {
 	UsersListAction,
 	UserDeleteAction,
+	UserUpdateAction,
 } from '../action-types/user.actionTypes';
 
 import { User } from '../../models/User';
@@ -70,6 +72,46 @@ export const userDeleteReducer = (
 			};
 		case UserDeleteActionTypes.USER_DELETE_FAIL:
 			return { ...state, loading: false, error: action.payload };
+		default:
+			return state;
+	}
+};
+
+export interface UserUpdateState {
+	loading: boolean;
+	success: boolean;
+	message: string;
+	user: User | null;
+	error: string | null;
+}
+
+const initialStateUpdate: UserUpdateState = {
+	loading: false,
+	success: false,
+	message: '',
+	user: null,
+	error: null,
+};
+
+export const userUpdateReducer = (
+	state: UserUpdateState = initialStateUpdate,
+	action: UserUpdateAction
+): UserUpdateState => {
+	switch (action.type) {
+		case UserUpdateActionTypes.USER_UPDATE_REQUEST:
+			return { ...state, loading: true, user: null };
+		case UserUpdateActionTypes.USER_UPDATE_SUCCESS:
+			return {
+				...state,
+				loading: false,
+				success: true,
+				user: action.payload.user,
+				message: action.payload.message,
+			};
+		case UserUpdateActionTypes.USER_UPDATE_FAIL:
+			return { ...state, loading: false, error: action.payload };
+		case UserUpdateActionTypes.USER_UPDATE_RESET:
+			return initialStateUpdate;
 		default:
 			return state;
 	}

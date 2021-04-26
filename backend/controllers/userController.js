@@ -368,11 +368,13 @@ export const updateUserById = asyncHandler(async (req, res) => {
 
 		res.status(200).json({
 			message: 'Updated User successfuly',
-			name: updatedUser.name,
-			userId: updatedUser.id,
-			email: updatedUser.email,
-			isAdmin: updatedUser.isAdmin,
-			userName: updatedUser.userName,
+			user: {
+				name: updatedUser.name,
+				userId: updatedUser.id,
+				email: updatedUser.email,
+				isAdmin: updatedUser.isAdmin,
+				userName: updatedUser.userName,
+			},
 		});
 	} else {
 		res.status(404);
