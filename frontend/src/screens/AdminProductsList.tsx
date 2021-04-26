@@ -13,12 +13,18 @@ const AdminProductsListScreen = () => {
 		(state: RootState) => state.productList
 	);
 
+	const {
+		error: errorDelete,
+		loading: loadingDelete,
+		success: successDelete,
+	} = useSelector((state: RootState) => state.productDelete);
+
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	const deleteProductHandler = (userId: string) => {
-		if (window.confirm('Are you sure you to delete this product?')) {
-			// Delete Product
+	const deleteProductHandler = (productId: string) => {
+		if (window.confirm('Are you sure you to delete this product ?')) {
+			dispatch(productActions.deleteProductByAdmin(productId));
 		}
 	};
 	const createProductHandler = () => {};
@@ -29,7 +35,7 @@ const AdminProductsListScreen = () => {
 		} else {
 			history.push('/login');
 		}
-	}, [userInfo, history, dispatch]);
+	}, [userInfo, history, successDelete, dispatch]);
 
 	if (loading) {
 		return (
@@ -51,8 +57,9 @@ const AdminProductsListScreen = () => {
 					</Button>
 				</Col>
 			</Row>
+			{loadingDelete && <Spinner />}
 			{error && <Message variant="danger">{error}</Message>}
-			{/* {deleteMessage && <Message variant="success">{deleteMessage}</Message>} */}
+			{errorDelete && <Message variant="success">{errorDelete}</Message>}
 			{products.length === 0 ? (
 				<div className="text-center">
 					<p>There is no products yet</p>

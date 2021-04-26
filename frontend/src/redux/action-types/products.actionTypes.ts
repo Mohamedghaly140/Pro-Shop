@@ -1,4 +1,8 @@
-import { ProductActionTypes } from '../actions/product.actions';
+import {
+	ProductActionTypes,
+	ProductDeleteActionTypes,
+	ProductUpdateActionTypes,
+} from '../actions/product.actions';
 import { Product } from '../../models/Product';
 
 interface ProductListAction {
@@ -38,3 +42,43 @@ export type ProductDetailsAction =
 	| ProductDetailAction
 	| ProductDetailSuccessAction
 	| ProductDetailErrorAction;
+
+// Product Delete
+interface ProductDeleteActionRequest {
+	type: ProductDeleteActionTypes.PRODUCT_DELETE_REQUEST;
+}
+
+interface ProductDeleteSuccessAction {
+	type: ProductDeleteActionTypes.PRODUCT_DELETE_SUCCESS;
+	payload: { message: string; product: Product };
+}
+
+interface ProductDeleteErrorAction {
+	type: ProductDeleteActionTypes.PRODUCT_DELETE_FAIL;
+	payload: string;
+}
+
+export type ProductDeleteAction =
+	| ProductDeleteActionRequest
+	| ProductDeleteSuccessAction
+	| ProductDeleteErrorAction;
+
+// Product Update
+interface ProductUpdateActionRequest {
+	type: ProductUpdateActionTypes.PRODUCT_UPDATE_REQUEST;
+}
+
+interface ProductUpdateSuccessAction {
+	type: ProductUpdateActionTypes.PRODUCT_UPDATE_SUCCESS;
+	payload: { message: string; product: Product };
+}
+
+interface ProductUpdateErrorAction {
+	type: ProductUpdateActionTypes.PRODUCT_UPDATE_FAIL;
+	payload: string;
+}
+
+export type ProductUpdateAction =
+	| ProductUpdateActionRequest
+	| ProductUpdateSuccessAction
+	| ProductUpdateErrorAction;
