@@ -24,7 +24,7 @@ export const getProductById = asyncHandler(async (req, res) => {
 });
 
 // @desc    Delete product
-// @route   DELETE /api/product/:id
+// @route   DELETE /api/products/:id
 // @access  Private/Admin
 export const deleteProductById = asyncHandler(async (req, res) => {
 	const product = await Product.findById(req.params.id);
@@ -36,4 +36,91 @@ export const deleteProductById = asyncHandler(async (req, res) => {
 		res.status(404);
 		throw new Error('Product not found');
 	}
+});
+
+// @desc    Craete product
+// @route   POST /api/products
+// @access  Private/Admin
+export const createProduct = asyncHandler(async (req, res) => {
+	const product = new Product({
+		name: 'Sample name',
+		price: 0,
+		user: req.userData.userId,
+		image: '/images/sample.jpg',
+		brand: 'smple brand',
+		category: 'smple category',
+		countInStock: 0,
+		numReviews: 0,
+		description: 'smple description',
+	});
+
+	let createdProduct;
+
+	try {
+		createdProduct = await product.save();
+	} catch (error) {
+		res.status(500);
+		throw new Error('Could not create product, try again later');
+	}
+
+	res.status(201).json({
+		message: 'Product Created Succesfuly',
+		product: createdProduct,
+	});
+});
+
+// @desc    Update product
+// @route   PUT /api/products/:id
+// @access  Private/Admin
+export const updateProductById = asyncHandler(async (req, res) => {
+	const productId = req.params.id;
+
+	let updateProduct;
+
+	try {
+		updateProduct = await Product.findById(productId);
+
+		if (!updateProduct) {
+			res.status(404);
+			throw new Error('Could not find product by this id');
+			return;
+		}
+	} catch (error) {
+		res.status(500);
+		throw new Error('Could not find product by this id, try again later');
+	}
+
+	const {
+		name,
+		price,
+		user,
+		image,
+		brand,
+		category,
+		countInStock,
+		numReviews,
+		description,
+	} = req.body;
+
+	updateProduct.name = name;
+	updateProduct.price = price;
+	updateProduct.countInStock = countInStock;
+	updateProduct.description = description;
+	updateProduct.brand = brand;
+	updateProduct.countInStock = countInStock;
+	updateProduct.numReviews = numReviews;
+	updateProduct.category = category;
+
+	let updatedProduct;
+	try {
+		updatedProduct = await updateProduct.save();
+	} catch (error) {
+		res.status(500);
+		throw new Error('Could not update product, try again later');
+	}
+
+	res.status(200).json({
+		message: 'Product Updated Succesfuly',
+		product: updatedProduct,
+	});
 });
